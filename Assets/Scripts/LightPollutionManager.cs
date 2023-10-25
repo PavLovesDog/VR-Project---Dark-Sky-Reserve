@@ -142,18 +142,34 @@ public class LightPollutionManager : MonoBehaviour
     {
         float initialBlendValue = skyboxController.blendValue;
         float elapsedTime = 0f;
+        int frameCounter = 0;
+        int updateFrequency = 10; // update every 10 frames
 
         while (elapsedTime < transitionDuration)
         {
             elapsedTime += Time.deltaTime;
             currentBlendValue = Mathf.Lerp(initialBlendValue, targetBlendValue, elapsedTime / transitionDuration);
             skyboxController.blendValue = currentBlendValue;
+
+            //RenderSettings.ambientIntensity = currentBlendValue;
+
+            // Rate-limit DynamicGI.UpdateEnvironment();
+            frameCounter++;
+            if (frameCounter >= updateFrequency)
+            {
+                DynamicGI.UpdateEnvironment();
+                frameCounter = 0;
+            }
+
             yield return null; // wait for the next frame
         }
 
         // Ensure we reach the exact target value at the end of the transition.
         skyboxController.blendValue = targetBlendValue;
         currentBlendValue = targetBlendValue;
+
+        // Final environment update at the end of the transition
+        //DynamicGI.UpdateEnvironment();
     }
 
 
