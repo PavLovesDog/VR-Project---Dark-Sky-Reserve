@@ -4195,7 +4195,7 @@ PrefabInstance:
     - target: {fileID: 7327684705257898728, guid: d11424eab1f98b44f8d204ac0b36db57,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.6973736
+      value: -0.131
       objectReference: {fileID: 0}
     - target: {fileID: 7327684705257898728, guid: d11424eab1f98b44f8d204ac0b36db57,
         type: 3}
@@ -4205,7 +4205,7 @@ PrefabInstance:
     - target: {fileID: 7327684705257898728, guid: d11424eab1f98b44f8d204ac0b36db57,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.6567838
+      value: 0.766
       objectReference: {fileID: 0}
     - target: {fileID: 7327684705257898728, guid: d11424eab1f98b44f8d204ac0b36db57,
         type: 3}
@@ -4241,6 +4241,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7327684705257898731, guid: d11424eab1f98b44f8d204ac0b36db57,
+        type: 3}
+      propertyPath: m_CameraYOffset
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7327684705257898731, guid: d11424eab1f98b44f8d204ac0b36db57,
+        type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7327684705257898733, guid: d11424eab1f98b44f8d204ac0b36db57,
         type: 3}
@@ -20310,7 +20320,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}

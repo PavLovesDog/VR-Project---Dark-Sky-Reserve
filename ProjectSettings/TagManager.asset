@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SkyboxController
   - LampLight
+  - Light
   layers:
   - Default
   - TransparentFX
