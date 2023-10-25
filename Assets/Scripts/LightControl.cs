@@ -37,18 +37,29 @@ public class LightControl : MonoBehaviour
             // find transform of light object in children
             Transform[] materials = obj.transform.FindChildrenWithTag("Light");
 
+            //Switch MATERIALS
             foreach (Transform material in materials)
             {
                 Debug.Log("OFF Material: " + material.name);
                 material.GetComponent<Renderer>().material = offMaterial;
             }
 
-            // Check for lights and disable them
+            // Check for LIGHTS and disable them
             Light[] lights = obj.GetComponentsInChildren<Light>(true);
             foreach (Light light in lights)
             {
                 Debug.Log("Light disabled: " + light.name);
                 light.enabled = false;
+            }
+
+            // Find BLOOM png objects
+            Transform[] blooms = obj.transform.FindChildrenWithTag("Bloom");
+            // Disable BLOOM png objects
+            foreach(Transform bloom in blooms)
+            {
+                Debug.Log("Bloom sprite disabled: " + bloom.name);
+                SpriteRenderer bloomSprite = bloom.GetComponent<SpriteRenderer>();
+                bloomSprite.enabled = false;
             }
         }
     }
@@ -72,6 +83,16 @@ public class LightControl : MonoBehaviour
             {
                 Debug.Log("Light enabled: " + light.name);
                 light.enabled = true;
+            }
+
+            // Find BLOOM png objects
+            Transform[] blooms = obj.transform.FindChildrenWithTag("Bloom");
+            // Enable BLOOM png objects
+            foreach (Transform bloom in blooms)
+            {
+                Debug.Log("Bloom sprite enabled: " + bloom.name);
+                SpriteRenderer bloomSprite = bloom.GetComponent<SpriteRenderer>();
+                bloomSprite.enabled = true;
             }
         }
     }
