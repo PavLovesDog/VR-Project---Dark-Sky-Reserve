@@ -12,7 +12,7 @@ public class LightPollutionManager : MonoBehaviour
     public SocketManager[] sockets;
 
     public ChangeMaterial[] bulbLights;
-    public LightControl[] LampLots;
+    public LightControl[] lightManagers;
 
     // To store the previous count and check for changes
     public int currentSocketsOccupiedCount = 0;
@@ -84,7 +84,7 @@ public class LightPollutionManager : MonoBehaviour
         //UpdateSkyboxBlend(currentSocketsOccupiedCount);
 
         //turn on lights for the specified socket
-        LampLots[socketID].TurnOnLights();
+        lightManagers[socketID].TurnOnLights();
     }
 
     //Event to fire when socket is Vacated
@@ -95,7 +95,7 @@ public class LightPollutionManager : MonoBehaviour
        // UpdateSkyboxBlend(currentSocketsOccupiedCount);
 
         //turn off lights for the specified socket
-        LampLots[socketID].TurnOffLights();
+        lightManagers[socketID].TurnOffLights();
     }
 
     private void UpdateSkyboxBlendIfNeeded()
