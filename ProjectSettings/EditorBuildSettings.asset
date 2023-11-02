@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Street Scene - Powerboard Extra Lights.unity
+    path: Assets/Scenes/Street Scene - Powerboard.unity
     guid: 7b5725cd0a6b5e946b8bf6e2069488e7
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 34b03cde0adfc844aa9ca29996cc9706,

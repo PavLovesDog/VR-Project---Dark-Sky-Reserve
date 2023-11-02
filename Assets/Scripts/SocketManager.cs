@@ -11,8 +11,8 @@ public class SocketManager : MonoBehaviour
     [Tooltip("ID of this specific socket.")]
     public int socketID;
 
-    [Tooltip("The XR Grabbable that fits this socket.")]
-    public XRBaseInteractable correctGrabbable;
+    [Tooltip("The Object that fits this socket.")]
+    public GameObject correctGrabbable;
 
     public LightPollutionManager LPM;
 
@@ -21,46 +21,26 @@ public class SocketManager : MonoBehaviour
     private void Awake()
     {
         // Check for any interactables already in the socket
-        foreach (var interactable in GetComponentsInChildren<XRBaseInteractable>())
+        if (correctGrabbable != null && correctGrabbable.transform.IsChildOf(transform))
         {
-            if (correctGrabbable == null || interactable == correctGrabbable)
-            {
-                IsOccupied = true;
-                break;  // exit the loop if we find a plug
-            }
+            IsOccupied = true;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        XRBaseInteractable interactable = other.GetComponent<XRBaseInteractable>();
-        if (interactable != null)
+        if (other.gameObject == correctGrabbable/* || correctGrabbable == null*/)
         {
-            // Optional: Check if it's the correct plug for this socket
-            if (correctGrabbable == null || interactable == correctGrabbable)
-            {
-                IsOccupied = true;
-            }
-        }
-
-        // If a correct plug is inserted
-        if (IsOccupied)
-        {
+            IsOccupied = true;
             OnSocketOccupied?.Invoke(socketID); // Raise the event
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        XRBaseInteractable interactable = other.GetComponent<XRBaseInteractable>();
-        if (interactable != null && (correctGrabbable == null || interactable == correctGrabbable))
+        if (other.gameObject == correctGrabbable/* || (correctGrabbable == null && IsOccupied*/)
         {
             IsOccupied = false;
-        }
-
-        // If a correct plug is removed
-        if (!IsOccupied)
-        {
             OnSocketVacated?.Invoke(socketID); // Raise the event
         }
     }
