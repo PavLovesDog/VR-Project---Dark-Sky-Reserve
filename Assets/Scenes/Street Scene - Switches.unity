@@ -153,7 +153,8 @@ Transform:
   m_LocalPosition: {x: -0.0014040323, y: 0.4391123, z: 0.105230786}
   m_LocalScale: {x: 2.5, y: 0.25, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 537389906}
   m_Father: {fileID: 1411194450}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1.2, y: 0, z: 0}
@@ -1059,7 +1060,7 @@ GameObject:
   - component: {fileID: 154490434}
   m_Layer: 0
   m_Name: sphere_bloom_red (2)
-  m_TagString: Untagged
+  m_TagString: Bloom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1072,12 +1073,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154490432}
   m_LocalRotation: {x: -0.010472207, y: -0, z: -0, w: 0.99994516}
-  m_LocalPosition: {x: -0.31481743, y: 0.4466769, z: -1.2727922}
-  m_LocalScale: {x: 1.1416107, y: 0.100040175, z: 1.1784723}
+  m_LocalPosition: {x: -0.12536481, y: 0.030258417, z: -0.5512087}
+  m_LocalScale: {x: 0.45664427, y: 0.4000273, z: 0.47359213}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 327216877}
-  m_RootOrder: 1
+  m_Father: {fileID: 795415334}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &154490434
 SpriteRenderer:
@@ -2771,7 +2772,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 795415334}
-  - {fileID: 154490433}
   m_Father: {fileID: 765109546}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 1.2, y: 0, z: 0}
@@ -4087,7 +4087,8 @@ Transform:
   m_LocalPosition: {x: -0.001403966, y: 0.43911335, z: 0.10523035}
   m_LocalScale: {x: 2.5, y: 0.25, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1468808428}
   m_Father: {fileID: 1194664099}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1.2, y: 0, z: 0}
@@ -4286,7 +4287,7 @@ GameObject:
   - component: {fileID: 537389907}
   m_Layer: 0
   m_Name: sphere_bloom_red
-  m_TagString: Untagged
+  m_TagString: Bloom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4298,13 +4299,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537389905}
-  m_LocalRotation: {x: -0.0104721775, y: -0, z: -0, w: 0.99994516}
-  m_LocalPosition: {x: 0.3, y: 0.46, z: -1.3}
-  m_LocalScale: {x: 1.1416107, y: 0.10004017, z: 1.1784723}
+  m_LocalRotation: {x: -0.010472207, y: -0, z: -0, w: 0.99994516}
+  m_LocalPosition: {x: 0.120561674, y: 0.08355105, z: -0.5620744}
+  m_LocalScale: {x: 0.45664427, y: 0.40002728, z: 0.4735921}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1411194450}
-  m_RootOrder: 1
+  m_Father: {fileID: 259294}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &537389907
 SpriteRenderer:
@@ -6779,7 +6780,8 @@ Transform:
   m_LocalPosition: {x: -0.0014060923, y: 0.43911335, z: 0.10523035}
   m_LocalScale: {x: 2.5, y: 0.25, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 154490433}
   m_Father: {fileID: 327216877}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1.2, y: 0, z: 0}
@@ -8703,7 +8705,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 515042279}
-  - {fileID: 1468808428}
   m_Father: {fileID: 409227774}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 1.2, y: 0, z: 0}
@@ -9899,7 +9900,8 @@ Transform:
   m_LocalPosition: {x: -0.0014054013, y: 0.43911096, z: 0.105231225}
   m_LocalScale: {x: 2.5, y: 0.25, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1542159875}
   m_Father: {fileID: 1530671751}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1.2, y: 0, z: 0}
@@ -10431,7 +10433,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 259294}
-  - {fileID: 537389906}
   m_Father: {fileID: 359682472}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 1.2, y: 0, z: 0}
@@ -10714,7 +10715,7 @@ GameObject:
   - component: {fileID: 1468808429}
   m_Layer: 0
   m_Name: sphere_bloom_red (3)
-  m_TagString: Untagged
+  m_TagString: Bloom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -10727,12 +10728,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468808427}
   m_LocalRotation: {x: -0.010472207, y: -0, z: -0, w: 0.99994516}
-  m_LocalPosition: {x: -0.77863973, y: 0.45999977, z: -1.3000418}
-  m_LocalScale: {x: 1.1416107, y: 0.100040175, z: 1.1784723}
+  m_LocalPosition: {x: -0.3108943, y: 0.08354688, z: -0.56207424}
+  m_LocalScale: {x: 0.45664427, y: 0.4000273, z: 0.47359213}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1194664099}
-  m_RootOrder: 1
+  m_Father: {fileID: 515042279}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1468808429
 SpriteRenderer:
@@ -12249,7 +12250,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1347812741}
-  - {fileID: 1542159875}
   m_Father: {fileID: 952645729}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 1.2, y: 0, z: 0}
@@ -12418,7 +12418,7 @@ GameObject:
   - component: {fileID: 1542159876}
   m_Layer: 0
   m_Name: sphere_bloom_red (1)
-  m_TagString: Untagged
+  m_TagString: Bloom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -12431,12 +12431,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542159874}
   m_LocalRotation: {x: -0.010472207, y: -0, z: -0, w: 0.99994516}
-  m_LocalPosition: {x: 0.03826469, y: 0.4466769, z: -1.2727922}
-  m_LocalScale: {x: 1.1416107, y: 0.100040175, z: 1.1784723}
+  m_LocalPosition: {x: 0.015868038, y: 0.030264974, z: -0.55117476}
+  m_LocalScale: {x: 0.45664427, y: 0.4000273, z: 0.47359213}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1530671751}
-  m_RootOrder: 1
+  m_Father: {fileID: 1347812741}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1542159876
 SpriteRenderer:
@@ -13265,7 +13265,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
@@ -15834,6 +15834,7 @@ MonoBehaviour:
   - {fileID: 2038988048}
   - {fileID: 558275098}
   - {fileID: 1568299866}
+  - {fileID: 1585345217}
   - {fileID: 1585345217}
   offMaterial: {fileID: 2100000, guid: ca01168478176c94a9f1fe5901436243, type: 2}
   lightMaterial: {fileID: 0}

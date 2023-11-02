@@ -65,4 +65,29 @@ public class ChangeMaterial : MonoBehaviour
 
         meshRenderer.material = switchMaterials[currentMaterialIndex];
     }
+
+    public void TurnOffBloom()
+    {
+        // Find BLOOM png objects
+        Transform[] blooms = this.transform.FindChildrenWithTag("Bloom");
+        // Disable BLOOM png objects
+        foreach (Transform bloom in blooms)
+        {
+            Debug.Log("Bloom sprite disabled: " + bloom.name);
+            SpriteRenderer bloomSprite = bloom.GetComponent<SpriteRenderer>();
+            bloomSprite.enabled = false;
+        }
+    }
+    public void TurnOnBloom()
+    {
+        // Find BLOOM png objects
+        Transform[] blooms = this.transform.FindChildrenWithTag("Bloom");
+        // Enable BLOOM png objects
+        foreach (Transform bloom in blooms)
+        {
+            Debug.Log("Bloom sprite enabled: " + bloom.name);
+            SpriteRenderer bloomSprite = bloom.GetComponent<SpriteRenderer>();
+            bloomSprite.enabled = true;
+        }
+    }
 }
