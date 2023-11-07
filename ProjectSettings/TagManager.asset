@@ -8,6 +8,7 @@ TagManager:
   - LampLight
   - Light
   - Bloom
+  - Hand
   layers:
   - Default
   - TransparentFX

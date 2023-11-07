@@ -85,6 +85,9 @@ public class LightPollutionManager : MonoBehaviour
 
         //turn on lights for the specified socket
         lightManagers[socketID].TurnOnLights();
+
+        ////play audio
+        //AudioManager.Instance.PlaySFX(0, 0.65f, Random.Range(0.6f,0.9f));
     }
 
     //Event to fire when socket is Vacated
@@ -96,6 +99,9 @@ public class LightPollutionManager : MonoBehaviour
 
         //turn off lights for the specified socket
         lightManagers[socketID].TurnOffLights();
+
+        ////play audio
+        //AudioManager.Instance.PlaySFX(1, 0.65f, Random.Range(0.6f, 0.9f));
     }
 
     private void UpdateSkyboxBlendIfNeeded()

@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.10702311, g: 0.14995982, b: 0.40197787, a: 1}
   m_AmbientEquatorColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1.5
+  m_AmbientIntensity: 1.75
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 41ad435b4c0a2f041b322c25241f9428, type: 2}
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 1206250337}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.018223261, g: 0.011355622, b: 0.041595683, a: 1}
+  m_IndirectSpecularColor: {r: 0.019199962, g: 0.053618126, b: 0.1473917, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8866,6 +8866,8 @@ GameObject:
   - component: {fileID: 1206037956}
   - component: {fileID: 1206037957}
   - component: {fileID: 1206037955}
+  - component: {fileID: 1206037958}
+  - component: {fileID: 1206037959}
   m_Layer: 0
   m_Name: Power Lever
   m_TagString: Untagged
@@ -9092,6 +9094,34 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &1206037958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206037953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046546e5aa0e66f48a77b5c8ea536291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onRotation: {x: -48.5, y: 0, z: 0}
+  offRotation: {x: -110, y: 0, z: 0}
+  leverSpeed: 2
+--- !u!65 &1206037959
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206037953}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.2360194, y: 1.0313549, z: 3.1192663}
+  m_Center: {x: -0.0238216, y: 0.5212102, z: 0.1887799}
 --- !u!89 &1206250337
 Cubemap:
   m_ObjectHideFlags: 0
@@ -16477,6 +16507,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2551822098996541979, guid: acef45e577f82234fbba9d63e66b0020,
+        type: 3}
+      propertyPath: m_TagString
+      value: Hand
+      objectReference: {fileID: 0}
     - target: {fileID: 2551822098996541981, guid: acef45e577f82234fbba9d63e66b0020,
         type: 3}
       propertyPath: m_ModelParent
@@ -16557,6 +16592,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CameraYOffset
       value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551822099777155598, guid: acef45e577f82234fbba9d63e66b0020,
+        type: 3}
+      propertyPath: m_TagString
+      value: Hand
       objectReference: {fileID: 0}
     - target: {fileID: 2551822099777155632, guid: acef45e577f82234fbba9d63e66b0020,
         type: 3}
