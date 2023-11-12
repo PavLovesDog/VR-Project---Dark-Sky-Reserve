@@ -10,11 +10,13 @@ public class LeverControl : MonoBehaviour
 
     public float leverSpeed = 2f; // Speed at which the lever moves
     public bool isOn; // Current state of the lever;
+    private float lastActivationTime = 0f;
+    public float activationCooldown = 0.5f; // Minimum time between activations
     private Coroutine rotationCoroutine; // Reference to current running coroutine
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Hand"))
+        if (other.gameObject.CompareTag("Hand") && Time.time - lastActivationTime >= activationCooldown)
         {
             Debug.Log("Lever TOUCHED Hand");
 
@@ -33,13 +35,19 @@ public class LeverControl : MonoBehaviour
 
             //play audio dependent on state
             if(isOn)
-                AudioManager.Instance.PlaySFX(1, 0.35f, Random.Range(0.6f, 0.9f)); // power down
+                AudioManager.Instance.PlaySFX(1, 0.35f, Random.Range(0.5f, 1.0f)); // power down
             else // is off
-                AudioManager.Instance.PlaySFX(0, 0.65f, Random.Range(0.6f, 0.9f)); // power up sound
+                AudioManager.Instance.PlaySFX(0, 0.65f, Random.Range(0.5f, 1.0f)); // power up sound
             
-
             // Toggle the state of the lever
             isOn = !isOn;
+
+            // Update last activation time
+            lastActivationTime = Time.time;
+        }
+        else
+        {
+            Debug.Log("Lever is cooling down.");
         }
     }
 
