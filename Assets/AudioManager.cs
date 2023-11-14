@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource sfxSource; // Where environment or interaction specific audio will come form
 
     [SerializeField]
-    private List<AudioClip> narrationClips; // all the narration specific clips (maybe order this as necessary)
+    public List<AudioClip> narrationClips; // all the narration specific clips (maybe order this as necessary)
 
     [SerializeField]
     private List<AudioClip> sfxClips; // All other audio clips
@@ -83,6 +83,11 @@ public class AudioManager : MonoBehaviour
     {
         narrationSource.Stop();
         narrationQueue.Clear();
+    }
+
+    public bool IsNarrationPlaying()
+    {
+        return narrationSource != null && narrationSource.isPlaying;
     }
 
     public void PlaySFX(int clipIndex, float volume, float pitch)

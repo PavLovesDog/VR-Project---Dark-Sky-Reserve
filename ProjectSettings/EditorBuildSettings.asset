@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Street Scene - Switches_foolProof.unity
-    guid: f502b3924f1fbbb489ffe82d35264eee
+    path: Assets/Scenes/0 - Main Menu.unity
+    guid: b581f468896938d4a964f838c4f6f94a
+  - enabled: 1
+    path: Assets/Scenes/1 - Street Scene.unity
+    guid: 28c9f00a2faa7924185c2bda23a3a741
+  - enabled: 1
+    path: Assets/Scenes/2 - RMIDSR Scene.unity
+    guid: f5bf4b8030862ae48a9f32ae0b7760ea
+  - enabled: 1
+    path: Assets/Scenes/3 - Planet Scene.unity
+    guid: 165575ecdab344d44b9ef622866131db
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 34b03cde0adfc844aa9ca29996cc9706,
       type: 2}

@@ -5,6 +5,17 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class LightPollutionManager : MonoBehaviour
 {
+    // Delegate and event for socket state changes
+    public delegate void SocketStateChangeAction(int socketIndex, bool isOccupied);
+    public event SocketStateChangeAction OnSocketStateChange;
+
+    // track which sockets have been previously deactivated
+    [SerializeField]
+    public HashSet<int> deactivatedLevers = new HashSet<int>();
+    [SerializeField]
+    private List<int> deactivatedLeversList = new List<int>(); // list for inspector purposes
+
+    
     [Tooltip("The Skybox to manipulate")]
     public SkyboxController skyboxController;
 
@@ -23,7 +34,6 @@ public class LightPollutionManager : MonoBehaviour
     public bool socket1Plugged;
     public bool socket2Plugged;
     public bool socket3Plugged;
-
 
     // Duration of the Light transition in seconds.
     private float transitionDuration = 3.0f;
@@ -76,6 +86,7 @@ public class LightPollutionManager : MonoBehaviour
         }
     }
 
+
     //Event to fire when socket is occupied
     private void HandleSocketOccupied(int socketID)
     {
@@ -88,6 +99,9 @@ public class LightPollutionManager : MonoBehaviour
 
         ////play audio
         //AudioManager.Instance.PlaySFX(0, 0.65f, Random.Range(0.6f,0.9f));
+
+        // Trigger the state change event with the socket ID and the state (occupied)
+        OnSocketStateChange?.Invoke(socketID, true);
     }
 
     //Event to fire when socket is Vacated
@@ -102,6 +116,32 @@ public class LightPollutionManager : MonoBehaviour
 
         ////play audio
         //AudioManager.Instance.PlaySFX(1, 0.65f, Random.Range(0.6f, 0.9f));
+
+        // Trigger the state change event with the socket ID and the state (not occupied)
+        OnSocketStateChange?.Invoke(socketID, false);
+    }
+
+    // Call this method to mark a socket as deactivated
+    public void MarkSocketAsDeactivated(int socketIndex)
+    {
+        if (!deactivatedLevers.Contains(socketIndex))
+        {
+            deactivatedLevers.Add(socketIndex);
+            // Update the debug list as well
+            deactivatedLeversList.Add(socketIndex);
+        }
+    }
+
+    //// Call this method to mark a socket as deactivated
+    //public void MarkSocketAsDeactivated(int socketIndex)
+    //{
+    //    deactivatedSockets.Add(socketIndex);
+    //}
+
+    // Call this method to check if a socket has been deactivated before
+    public bool HasSocketBeenDeactivatedBefore(int socketIndex)
+    {
+        return deactivatedLevers.Contains(socketIndex);
     }
 
     private void UpdateSkyboxBlendIfNeeded()
@@ -177,7 +217,6 @@ public class LightPollutionManager : MonoBehaviour
         // Final environment update at the end of the transition
         //DynamicGI.UpdateEnvironment();
     }
-
 
     public void TrackSockets()
     {
