@@ -9,11 +9,13 @@ TagManager:
   - Light
   - Bloom
   - Hand
+  - CinemachineTarget
+  - BeginButton
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Gaze
   - Water
   - UI
   - 
