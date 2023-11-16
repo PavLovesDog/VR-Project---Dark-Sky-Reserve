@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 1206250337}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.009993327, g: 0.0020812987, b: 0.010965377, a: 1}
+  m_IndirectSpecularColor: {r: 0.011876559, g: 0.033097856, b: 0.090955265, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -247,8 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8b599acebea7d418c1f843cd6cf3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightOffMaterial: {fileID: 0}
-  lightOnMaterial: {fileID: 0}
+  lightOffMaterial: {fileID: 2100000, guid: 81cfe83e296e83e4599657452510ae40, type: 2}
+  lightOnMaterial: {fileID: 2100000, guid: b2cd86e3e6fab244f9cb46b373745524, type: 2}
   meshRenderer: {fileID: 0}
   originalMaterials: []
 --- !u!1001 &10412671
@@ -9164,8 +9164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8b599acebea7d418c1f843cd6cf3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightOffMaterial: {fileID: 0}
-  lightOnMaterial: {fileID: 0}
+  lightOffMaterial: {fileID: 2100000, guid: 81cfe83e296e83e4599657452510ae40, type: 2}
+  lightOnMaterial: {fileID: 2100000, guid: b2cd86e3e6fab244f9cb46b373745524, type: 2}
   meshRenderer: {fileID: 0}
   originalMaterials: []
 --- !u!1 &858795075
@@ -9351,8 +9351,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8b599acebea7d418c1f843cd6cf3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightOffMaterial: {fileID: 0}
-  lightOnMaterial: {fileID: 0}
+  lightOffMaterial: {fileID: 2100000, guid: 81cfe83e296e83e4599657452510ae40, type: 2}
+  lightOnMaterial: {fileID: 2100000, guid: b2cd86e3e6fab244f9cb46b373745524, type: 2}
   meshRenderer: {fileID: 0}
   originalMaterials: []
 --- !u!1 &895819592
@@ -10657,8 +10657,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8b599acebea7d418c1f843cd6cf3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightOffMaterial: {fileID: 0}
-  lightOnMaterial: {fileID: 0}
+  lightOffMaterial: {fileID: 2100000, guid: 81cfe83e296e83e4599657452510ae40, type: 2}
+  lightOnMaterial: {fileID: 2100000, guid: b2cd86e3e6fab244f9cb46b373745524, type: 2}
   meshRenderer: {fileID: 0}
   originalMaterials: []
 --- !u!1 &1076759032

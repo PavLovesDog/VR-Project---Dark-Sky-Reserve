@@ -26,6 +26,15 @@ public class ExperienceManager : MonoBehaviour
     private bool beginNarration = true;
 
     [SerializeField]
+    private bool pauseLeverCount = true;
+
+    [Header("Narration Clips")]
+    [SerializeField]
+    private bool allRMIDSRNarrationPlayed = false;
+    [SerializeField]
+    private bool planetNarrationClip1Played = false;
+
+    [SerializeField]
     private string[] sceneNames; // Assign this array in the Inspector
 
     private void Awake()
@@ -70,6 +79,7 @@ public class ExperienceManager : MonoBehaviour
         //BELOW WONT BE REQUIRED WHEN WE START FROM MAIN MENU. leave as is  for now
         // Start the initial sequence 
         StartCoroutine(InitialNarrationSequence());
+        pauseLeverCount = true;
     }
 
     // This method is called every time a scene is loaded
@@ -125,7 +135,7 @@ public class ExperienceManager : MonoBehaviour
     private void HandleSocketStateChange(int socketIndex, bool isOccupied)
     {
         // Only act on sockets being vacated (turned off)
-        if (!isOccupied && !AudioManager.Instance.IsNarrationPlaying())
+        if (!isOccupied && !AudioManager.Instance.IsNarrationPlaying() && !pauseLeverCount)
         {
             // Check if the socket has not been deactivated before
             if (!lightPollutionManager.HasSocketBeenDeactivatedBefore(socketIndex))
@@ -195,15 +205,28 @@ public class ExperienceManager : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
         }
 
-        //FADE TO BLACK
+        //NOTE ABOVE RUNS TOO FAST, it triggers the last scene before all clips from this scene are read through
+        allRMIDSRNarrationPlayed = true;
+        yield return new WaitForSeconds(3.0f); // wait next clip to play
 
+        //Trigger FADE TO BLACK.... maybe not
+
+        StartCoroutine(ChangeToPlanetScene());
+    }
+
+    private IEnumerator ChangeToPlanetScene()
+    {
         // After all clips are done playing, change the scene
         while (AudioManager.Instance.IsNarrationPlaying())
         {
             yield return null;
         }
+
+        ////Trigger FADE TO BLACK and change scene there?
+
         yield return new WaitForSeconds(3.0f); // wait for fadeout
-        ChangeScene(sceneNames[3]);
+        if(allRMIDSRNarrationPlayed)
+            ChangeScene(sceneNames[3]);
     }
 
     // Planet Scene logic
@@ -254,15 +277,18 @@ public class ExperienceManager : MonoBehaviour
 
         // Start the first narration clip
         PlayNarrationClip();
+        pauseLeverCount = false; //allow fir counting of first trigger after first clip starts!
     }
 
     // Coroutine to be used if a delay before starting of next line is required
     private IEnumerator ContinueNarration()
     {
+        pauseLeverCount = true;
         // Wait a short time before starting the next narration sequence
         yield return new WaitForSeconds(narrationDelay);
 
         PlayNarrationClip();
+        pauseLeverCount = false;
     }
 
     // Function to play the next line of narration
