@@ -183,7 +183,7 @@ RectTransform:
   m_GameObject: {fileID: 182745103}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.6625, y: 1.6963, z: 1}
+  m_LocalScale: {x: 1.4570816, y: 1.3194678, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 332500636}
@@ -192,7 +192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.32, y: -7.29}
+  m_AnchoredPosition: {x: 3.02, y: -7.29}
   m_SizeDelta: {x: 6.1732, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &182745105
@@ -906,8 +906,9 @@ GameObject:
   m_Component:
   - component: {fileID: 738448787}
   - component: {fileID: 738448788}
+  - component: {fileID: 738448789}
   m_Layer: 0
-  m_Name: Ambience Source
+  m_Name: Music Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -938,9 +939,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f949090e3f2160e44a0a27dabead7c6f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1024,6 +1025,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &738448789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738448786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d69d08c4783dfe46a1f05b1f9da2645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &884953623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1094,7 @@ RectTransform:
   m_GameObject: {fileID: 1164135530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.083125, y: 0.084815, z: 1}
+  m_LocalScale: {x: 0.07285408, y: 0.065973386, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1725345045}
@@ -1092,7 +1105,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.65, y: -7.43}
+  m_AnchoredPosition: {x: -4.86, y: -7.43}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1164135532
@@ -1142,7 +1155,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1893,7 +1906,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

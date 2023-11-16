@@ -6,65 +6,115 @@
 public class ChangeMaterial : MonoBehaviour
 {
     [Tooltip("The material that's switched to.")]
-    public Material otherMaterial = null;
-
-    [Tooltip("A list of materioals to switch between.")]
-    public Material[] switchMaterials = null;
-    private int currentMaterialIndex = 0;
+    public Material lightOffMaterial = null;
+    public Material lightOnMaterial = null;
 
     private bool usingOther = false;
-    private MeshRenderer meshRenderer = null;
-    private Material originalMaterial = null;
+    public MeshRenderer meshRenderer = null;
+    public Material[] originalMaterials = null;
 
     private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
-        originalMaterial = meshRenderer.material;
+        originalMaterials = meshRenderer.materials.Clone() as Material[];
     }
 
-    public void SetOtherMaterial()
+    public void SetMaterial(int index, Material newMaterial)
     {
-        usingOther = true;
-        meshRenderer.material = otherMaterial;
-    }
-
-    public void SetOriginalMaterial()
-    {
-        usingOther = false;
-        meshRenderer.material = originalMaterial;
-    }
-
-    public void ToggleMaterial()
-    {
-        usingOther = !usingOther;
-
-        if(usingOther)
+        // First, check if the index is valid
+        if (index < 0 || index >= meshRenderer.materials.Length)
         {
-            meshRenderer.material = otherMaterial;
-        }
-        else
-        {
-            meshRenderer.material = originalMaterial;
-        }
-    }
-
-    public void NextMaterial()
-    {
-        if (switchMaterials == null || switchMaterials.Length == 0)
-        {
-            Debug.LogWarning("No materials to switch between!");
+            Debug.LogError("Material index out of range.");
             return;
         }
 
-        currentMaterialIndex++; // Move to the next material
+        // Get a copy of the current materials array from the renderer
+        Material[] materials = meshRenderer.materials;
 
-        if (currentMaterialIndex >= switchMaterials.Length)
-        {
-            currentMaterialIndex = 0; // Loop back to the start if we've passed the end of the array
-        }
+        // Change the material at the specified index
+        materials[index] = newMaterial;
 
-        meshRenderer.material = switchMaterials[currentMaterialIndex];
+        // Re-assign the modified materials array back to the renderer
+        meshRenderer.materials = materials;
     }
+
+    public void SetOriginalMaterial(int index)
+    {
+        if (originalMaterials != null && index >= 0 && index < originalMaterials.Length)
+        {
+            // Get the current materials array
+            Material[] currentMaterials = meshRenderer.materials;
+
+            // Replace the specified material with the original one
+            currentMaterials[index] = originalMaterials[index];
+            
+            // Assign the modified materials array back to the renderer
+            meshRenderer.materials = originalMaterials;
+        }
+        else
+        {
+            Debug.LogError("Original materials array not set or index out of range.");
+        }
+    }
+
+
+    //public void ToggleMaterial(int materialIndex)
+    //{
+    //    usingOther = !usingOther;
+    //
+    //    // Make sure we don't access out of bounds
+    //    if (materialIndex < 0 || materialIndex >= meshRenderer.materials.Length)
+    //    {
+    //        Debug.LogError("Material index out of range.");
+    //        return;
+    //    }
+    //
+    //    // Get the current materials array
+    //    Material[] currentMaterials = meshRenderer.materials;
+    //
+    //    // Toggle the specified material
+    //    if (usingOther)
+    //    {
+    //        currentMaterials[materialIndex] = redLightOffMaterial;
+    //    }
+    //    else
+    //    {
+    //        currentMaterials[materialIndex] = originalMaterials[1];
+    //    }
+    //
+    //    // Assign the modified materials array back to the renderer
+    //    meshRenderer.materials = currentMaterials;
+    //
+    //    //OLD shit
+    //    //usingOther = !usingOther;
+    //    //
+    //    //if(usingOther)
+    //    //{
+    //    //    meshRenderer.material = otherMaterial;
+    //    //}
+    //    //else
+    //    //{
+    //    //    meshRenderer.material = originalMaterial;
+    //    //}
+    //}
+
+    //public void NextMaterial()
+    //{
+    //    if (switchMaterials == null || switchMaterials.Length == 0)
+    //    {
+    //        Debug.LogWarning("No materials to switch between!");
+    //        return;
+    //    }
+    //
+    //    currentMaterialIndex++; // Move to the next material
+    //
+    //    if (currentMaterialIndex >= switchMaterials.Length)
+    //    {
+    //        currentMaterialIndex = 0; // Loop back to the start if we've passed the end of the array
+    //    }
+    //
+    //    meshRenderer.material = switchMaterials[currentMaterialIndex];
+    //}
 
     public void TurnOffBloom()
     {

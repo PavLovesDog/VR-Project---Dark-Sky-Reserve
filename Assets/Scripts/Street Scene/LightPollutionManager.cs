@@ -223,52 +223,52 @@ public class LightPollutionManager : MonoBehaviour
         if (sockets[0].IsOccupied)
         {
             socket0Plugged = true;
-            bulbLights[0].SetOriginalMaterial(); // plug lights
+            bulbLights[0].SetOriginalMaterial(1); // Reset the second material to the original
             bulbLights[0].TurnOnBloom();
         }
         else
         {
             socket0Plugged = false;
-            bulbLights[0].SetOtherMaterial(); // stop red bulb
+            bulbLights[0].SetMaterial(1, bulbLights[0].lightOffMaterial); // stop red bulb
             bulbLights[0].TurnOffBloom();
         }
 
         if (sockets[1].IsOccupied)
         {
             socket1Plugged = true;
-            bulbLights[1].SetOriginalMaterial();
+            bulbLights[1].SetOriginalMaterial(1);
             bulbLights[1].TurnOnBloom();
         }
         else
         {
             socket1Plugged = false;
-            bulbLights[1].SetOtherMaterial();
+            bulbLights[1].SetMaterial(1, bulbLights[1].lightOffMaterial);
             bulbLights[1].TurnOffBloom();
         }
 
         if (sockets[2].IsOccupied)
         {
             socket2Plugged = true;
-            bulbLights[2].SetOriginalMaterial();
+            bulbLights[2].SetOriginalMaterial(1);
             bulbLights[2].TurnOnBloom();
         }
         else
         {
             socket2Plugged = false;
-            bulbLights[2].SetOtherMaterial();
+            bulbLights[2].SetMaterial(1, bulbLights[2].lightOffMaterial); ;
             bulbLights[2].TurnOffBloom();
         }
 
         if (sockets[3].IsOccupied)
         { 
             socket3Plugged = true;
-            bulbLights[3].SetOriginalMaterial();
+            bulbLights[3].SetOriginalMaterial(1);
             bulbLights[3].TurnOnBloom();
         }
         else
         {
             socket3Plugged = false;
-            bulbLights[3].SetOtherMaterial();
+            bulbLights[3].SetMaterial(1, bulbLights[3].lightOffMaterial);
             bulbLights[3].TurnOffBloom();
         }
 

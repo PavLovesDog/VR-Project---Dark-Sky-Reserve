@@ -198,6 +198,11 @@ public class ExperienceManager : MonoBehaviour
         //FADE TO BLACK
 
         // After all clips are done playing, change the scene
+        while (AudioManager.Instance.IsNarrationPlaying())
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(3.0f); // wait for fadeout
         ChangeScene(sceneNames[3]);
     }
 
