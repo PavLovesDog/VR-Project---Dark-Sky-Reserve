@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 1206250337}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.01640241, g: 0.011372939, b: 0.040116012, a: 1}
+  m_IndirectSpecularColor: {r: 0.0013514969, g: 0.0010850356, b: 0.000781437, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20828,6 +20828,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: spotlight_lowPoly001
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7bcb8460ab8112848979f9c39f38cc70,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bcb8460ab8112848979f9c39f38cc70, type: 3}

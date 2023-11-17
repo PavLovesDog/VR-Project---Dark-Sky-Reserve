@@ -13,19 +13,14 @@ public class ExperienceManager : MonoBehaviour
     [Header("Narration Variables")]
     [SerializeField]
     private float initialNarrationDelay = 5.0f; // Time before starting the narration
-
     [SerializeField]
     private float narrationDelay = 3.0f; // Time before starting the narration
-
     [SerializeField]
     public int currentNarrationIndex = 0;
-
     [SerializeField]
     private int uniqueDeactivatedLeversCount = 0; // Tracks how many unique levers have been deactivated
-
     [SerializeField]
     private bool beginNarration = true;
-
     [SerializeField]
     private bool pauseLeverCount = true;
 
@@ -132,6 +127,7 @@ public class ExperienceManager : MonoBehaviour
                 break;
 
             case "1 - Street Scene":
+                currentNarrationIndex = 0; // set index directly
                 inStreetScene = true;
                 inMainMenu = false;
                 if (beginNarration)
@@ -142,12 +138,14 @@ public class ExperienceManager : MonoBehaviour
                 break;
 
             case "2 - RMIDSR Scene":
+                currentNarrationIndex = 5; // set index directly
                 inRmidsrScene = true;
                 inStreetScene = false;
                 StartCoroutine(PlayRMIDSRNarrationSequence());
                 break;
 
             case "3 - Planet Scene":
+                currentNarrationIndex = 10; // set index directly
                 inPlanetScene = true;
                 inRmidsrScene = false;
                 StartCoroutine(PlayPlanetSceneNarrationSequence());
@@ -195,7 +193,6 @@ public class ExperienceManager : MonoBehaviour
 
                 // Play the next narration clip with slight delay
                 StartCoroutine(ContinueNarration());
-
             }
         }
 
@@ -224,7 +221,8 @@ public class ExperienceManager : MonoBehaviour
         {
             yield return null;
         }
-        
+        currentNarrationIndex++; // incremennt index -------------------------------------------------------------------------INDEX INCREMENT
+
         yield return new WaitForSeconds(6.0f); // DEBUG NOTE; ALLOW TIME FOR TRANSITION
 
         ChangeScene(sceneNames[2]);
@@ -239,15 +237,21 @@ public class ExperienceManager : MonoBehaviour
         // Wait a short time before starting the narration sequence
         yield return new WaitForSeconds(1.0f);
 
-        // Play each RMIDSR narration clip in sequence
-        for (int i = 5; i <= 9; i++)
+        // Start playing from the current index (which should be set to 5 when this scene starts)
+        while (currentNarrationIndex <= 9)
         {
-            AudioManager.Instance.PlayNarration(i);
-            // Wait for the clip to finish playing before continuing
+            // Only enqueue the clip if the narration is not playing
+            if (!AudioManager.Instance.IsNarrationPlaying())
+            {
+                AudioManager.Instance.PlayNarration(currentNarrationIndex);
+            }
+
             yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
+            currentNarrationIndex++; // incremennt index -------------------------------------------------------------------------INDEX INCREMENT
 
             // Additionally, wait a bit between clips
             yield return new WaitForSeconds(1.0f);
+
         }
 
         // After all clips are done playing, proceed to change the scene
@@ -278,18 +282,20 @@ public class ExperienceManager : MonoBehaviour
         // Wait a short time before starting the planet scene narration sequence
         yield return new WaitForSeconds(1.0f);
 
-        // Play each Planet scene narration clip in sequence
-        for (int i = 10; i <= 11; i++)
+        // Start playing from the current index (which should be set to 10 when this scene starts)
+        while (currentNarrationIndex <= 11)
         {
-            //AudioManager.Instance.PlayNarration(i);
-            PlayNarrationClip();
-            while (AudioManager.Instance.IsNarrationPlaying())
+            // Only enqueue the clip if the narration is not playing
+            if (!AudioManager.Instance.IsNarrationPlaying())
             {
-                yield return null;
+                AudioManager.Instance.PlayNarration(currentNarrationIndex);
             }
+
+            yield return new WaitWhile(() => AudioManager.Instance.narrationSource.isPlaying);
+            currentNarrationIndex++; //----------------------------------------------------------------------------------------INDEX INCREMENT
             yield return new WaitForSeconds(1.0f);
         }
-
+        
         // Trigger any end-of-experience actions, such as sshowing credits
         // ...
 
@@ -320,7 +326,7 @@ public class ExperienceManager : MonoBehaviour
         yield return new WaitForSeconds(initialNarrationDelay);
 
         // Start the first narration clip
-        PlayNarrationClip();
+        PlayStreetNarrationClip();
         pauseLeverCount = false; //allow fir counting of first trigger after first clip starts!
     }
 
@@ -331,17 +337,12 @@ public class ExperienceManager : MonoBehaviour
         // Wait a short time before starting the next narration sequence
         yield return new WaitForSeconds(narrationDelay);
 
-        PlayNarrationClip();
+        PlayStreetNarrationClip();
         pauseLeverCount = false;
-
-        //// Wait until the clip is finished playing
-        //yield return new WaitWhile(() => AudioManager.Instance.narrationSource.isPlaying);
-        //currentNarrationIndex++; // then incremennt
-
     }
 
     // Function to play the next line of narration UNUSED RIGHT NOW
-    public void PlayNarrationClip()
+    public void PlayStreetNarrationClip()
     {
         // if narration is not currently playing
         if (!AudioManager.Instance.IsNarrationPlaying())
@@ -350,9 +351,8 @@ public class ExperienceManager : MonoBehaviour
             if (currentNarrationIndex < AudioManager.Instance.narrationClips.Count)
             {
                 AudioManager.Instance.PlayNarration(currentNarrationIndex);
-
-                // Increment the index for the next clip
-                //currentNarrationIndex++;
+                //Increment the index for the next clip
+                currentNarrationIndex++; // incremennt index -------------------------------------------------------------------------INDEX INCREMENT
             }
             else
             {

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class GazeInteraction : MonoBehaviour
 {
-    public string streetSceneName = "1 - Streen Scene"; // The name of the scene you want to load
+    public string streetSceneName = "1 - Street Scene"; // The name of the scene you want to load
     public Transform gazeTransform; // Assign the VR camera or head transform here
     public Image loadingImage; // Assign a UI Image that will act as the loading reticule or animation
     public float gazeTime = 3f; // Time in seconds the player has to gaze at the button

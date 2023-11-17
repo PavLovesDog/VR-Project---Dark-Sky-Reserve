@@ -190,6 +190,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Origin (XR Rig) 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9152080135240802158, guid: 25b2dfd1a73ae024898111ab474e101c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25b2dfd1a73ae024898111ab474e101c, type: 3}
 --- !u!1 &79432024
@@ -359,6 +364,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 12.566355, y: 4.2163544, z: 0.30823898}
   m_Center: {x: -1.22995, y: -0.13255978, z: -0.014578819}
+--- !u!1 &198460998 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9152080135240802158, guid: 25b2dfd1a73ae024898111ab474e101c,
+    type: 3}
+  m_PrefabInstance: {fileID: 32283392}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &198461005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198460998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e813f552daf647042bd9f97b320c190a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streetSceneName: 1 - Street Scene
+  gazeTransform: {fileID: 1627498368}
+  loadingImage: {fileID: 1736999905}
+  gazeTime: 3
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  maxGazeDistance: 100
 --- !u!1 &252648376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1738,6 +1769,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625380314}
   m_CullTransparentMesh: 1
+--- !u!4 &1627498368 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9152080136201371368, guid: 25b2dfd1a73ae024898111ab474e101c,
+    type: 3}
+  m_PrefabInstance: {fileID: 32283392}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1676521896
 PrefabInstance:
   m_ObjectHideFlags: 0

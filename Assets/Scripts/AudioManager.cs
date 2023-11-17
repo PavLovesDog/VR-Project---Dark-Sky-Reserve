@@ -63,8 +63,8 @@ public class AudioManager : MonoBehaviour
             // Wait until the clip is finished playing
             yield return new WaitWhile(() => narrationSource.isPlaying);
 
-            // Optionally, increment the index here if this is the only place that affects it
-            ExperienceManager.Instance.currentNarrationIndex++;
+            //// Optionally, increment the index here if this is the only place that affects it
+            //ExperienceManager.Instance.currentNarrationIndex++;
         }
     }
 
