@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [SerializeField]
-    private AudioSource narrationSource; // Where the main narration will come form
+    public AudioSource narrationSource; // Where the main narration will come form
 
     [SerializeField]
     private AudioSource sfxSource; // Where environment or interaction specific audio will come form
@@ -34,33 +34,37 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // used to play a specific narration clip.
+    // Used to play a specific narration clip.
     public void PlayNarration(int clipIndex)
     {
-        //catch for bad clip index
         if (clipIndex < 0 || clipIndex >= narrationClips.Count)
+        {
+            Debug.LogError("Clip index out of range");
             return;
+        }
 
-        // add it to the queue
         narrationQueue.Enqueue(narrationClips[clipIndex]);
-        // if nothing playing, play it now
-        if (!narrationSource.isPlaying)
+
+        // If nothing is playing, play it now
+        if (narrationSource != null && !narrationSource.isPlaying)
         {
             StartCoroutine(PlayNarrationQueue());
         }
     }
 
-    //a coroutine that manages the queue of narrations.
+    // A coroutine that manages the queue of narrations.
     private IEnumerator PlayNarrationQueue()
     {
         while (narrationQueue.Count > 0)
         {
             narrationSource.clip = narrationQueue.Dequeue();
             narrationSource.Play();
-            while (narrationSource.isPlaying)
-            {
-                yield return null;
-            }
+
+            // Wait until the clip is finished playing
+            yield return new WaitWhile(() => narrationSource.isPlaying);
+
+            // Optionally, increment the index here if this is the only place that affects it
+            ExperienceManager.Instance.currentNarrationIndex++;
         }
     }
 
@@ -68,6 +72,12 @@ public class AudioManager : MonoBehaviour
     {
         narrationSource.Pause();
     }
+
+    //private void skipClip()
+    //{
+    //    narrationSource.Stop();
+    //
+    //}
 
     public void ResumeNarration()
     {

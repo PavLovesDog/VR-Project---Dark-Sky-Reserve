@@ -10,6 +10,7 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField]
     private LightPollutionManager lightPollutionManager; // Assign in inspector
 
+    [Header("Narration Variables")]
     [SerializeField]
     private float initialNarrationDelay = 5.0f; // Time before starting the narration
 
@@ -17,7 +18,7 @@ public class ExperienceManager : MonoBehaviour
     private float narrationDelay = 3.0f; // Time before starting the narration
 
     [SerializeField]
-    private int currentNarrationIndex = 0;
+    public int currentNarrationIndex = 0;
 
     [SerializeField]
     private int uniqueDeactivatedLeversCount = 0; // Tracks how many unique levers have been deactivated
@@ -34,8 +35,43 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField]
     private bool planetNarrationClip1Played = false;
 
+    [Header("Names Of Scenes")]
     [SerializeField]
     private string[] sceneNames; // Assign this array in the Inspector
+
+    [Header("Current Scene")]
+    [SerializeField]
+    private bool inMainMenu;
+    [SerializeField]
+    private bool inStreetScene;
+    [SerializeField]
+    private bool inRmidsrScene;
+    [SerializeField]
+    private bool inPlanetScene;
+
+    #region DEBUGGING
+    //DEBUGGING ======================================================================= DEBUG
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            skipClip();
+    }
+
+    private void skipClip()
+    {
+        //increment index
+        currentNarrationIndex++;
+
+        //stop audio and play next track
+        AudioManager.Instance.narrationSource.Stop();
+        AudioManager.Instance.PlayNarration(currentNarrationIndex);
+
+        //increment int that controls street scene
+        if (uniqueDeactivatedLeversCount <= 4)
+            uniqueDeactivatedLeversCount++;
+    }
+    //DEBUGGING ======================================================================= DEBUG
+    #endregion
 
     private void Awake()
     {
@@ -90,19 +126,30 @@ public class ExperienceManager : MonoBehaviour
         {
             case "0 - Main Menu":
                 // Handle main menu logic, potentially resetting flags
+                inPlanetScene = false;
+                inMainMenu = true;
                 ResetExperience();
                 break;
+
             case "1 - Street Scene":
+                inStreetScene = true;
+                inMainMenu = false;
                 if (beginNarration)
                 {
                     beginNarration = false;
                     StartCoroutine(InitialStreetSceneNarration());
                 }
                 break;
+
             case "2 - RMIDSR Scene":
+                inRmidsrScene = true;
+                inStreetScene = false;
                 StartCoroutine(PlayRMIDSRNarrationSequence());
                 break;
+
             case "3 - Planet Scene":
+                inPlanetScene = true;
+                inRmidsrScene = false;
                 StartCoroutine(PlayPlanetSceneNarrationSequence());
                 break;
                 // Add cases for other scenes if necessary
@@ -114,7 +161,7 @@ public class ExperienceManager : MonoBehaviour
         beginNarration = true;
         // Reset other flags HERE as needed
     }
-
+    #region Street Scene Logic
     // Street Scene logic
     // --------------------------------------------------------------------------------------- STREET SCENE
     private IEnumerator InitialStreetSceneNarration()
@@ -146,8 +193,7 @@ public class ExperienceManager : MonoBehaviour
                 // Increment the count of unique deactivated levers
                 uniqueDeactivatedLeversCount++;
 
-                // MAYBE activate coroutine to delay play of clip slightly
-                // Play the next narration clip
+                // Play the next narration clip with slight delay
                 StartCoroutine(ContinueNarration());
 
             }
@@ -162,7 +208,7 @@ public class ExperienceManager : MonoBehaviour
         }
     }
 
-    //TODO CREATE LOGIC TOP INITIATE A TRANSITION!
+    //TODO CREATE LOGIC TO INITIATE A TRANSITION!
 
     //Coroutine to call to initiate change
     private IEnumerator EndOfStreetScene()
@@ -183,7 +229,9 @@ public class ExperienceManager : MonoBehaviour
 
         ChangeScene(sceneNames[2]);
     }
+#endregion
 
+    #region RMIDSR Scene Logic
     // RMIDSR Scene logic
     // --------------------------------------------------------------------------------------- RMIDSR SCENE
     private IEnumerator PlayRMIDSRNarrationSequence()
@@ -194,44 +242,37 @@ public class ExperienceManager : MonoBehaviour
         // Play each RMIDSR narration clip in sequence
         for (int i = 5; i <= 9; i++)
         {
-            //AudioManager.Instance.PlayNarration(i);
-            PlayNarrationClip();
+            AudioManager.Instance.PlayNarration(i);
             // Wait for the clip to finish playing before continuing
-            while (AudioManager.Instance.IsNarrationPlaying())
-            {
-                yield return null;
-            }
-            // Optionally, wait a bit between clips
+            yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
+
+            // Additionally, wait a bit between clips
             yield return new WaitForSeconds(1.0f);
         }
 
-        //NOTE ABOVE RUNS TOO FAST, it triggers the last scene before all clips from this scene are read through
-        allRMIDSRNarrationPlayed = true;
-        yield return new WaitForSeconds(3.0f); // wait next clip to play
-
-        //Trigger FADE TO BLACK.... maybe not
-
-        StartCoroutine(ChangeToPlanetScene());
+        // After all clips are done playing, proceed to change the scene
+        ChangeToPlanetScene();
     }
 
-    private IEnumerator ChangeToPlanetScene()
+    private void ChangeToPlanetScene()
     {
-        // After all clips are done playing, change the scene
-        while (AudioManager.Instance.IsNarrationPlaying())
-        {
-            yield return null;
-        }
+        // Trigger FADE TO BLACK (if have a fade animation, start it here and wait for it to finish)
 
-        ////Trigger FADE TO BLACK and change scene there?
-
-        yield return new WaitForSeconds(3.0f); // wait for fadeout
-        if(allRMIDSRNarrationPlayed)
-            ChangeScene(sceneNames[3]);
+        // Change the scene after a delay for the fade to black
+        StartCoroutine(DelayedSceneChange());
     }
 
+    private IEnumerator DelayedSceneChange()
+    {
+        // Wait for the fade out before changing the scene
+        yield return new WaitForSeconds(3.0f);
+        ChangeScene(sceneNames[3]);
+    }
+    #endregion
+
+    #region Planet Scene Logic
     // Planet Scene logic
     // --------------------------------------------------------------------------------------- PLANET SCENE
-
     private IEnumerator PlayPlanetSceneNarrationSequence()
     {
         // Wait a short time before starting the planet scene narration sequence
@@ -267,9 +308,12 @@ public class ExperienceManager : MonoBehaviour
         SceneManager.LoadScene("0 - Main Menu");
     }
 
+    #endregion
+
+    #region Narration Management
     // NARRATION MANAGEMENT
     //---------------------------------------------------------------------------------------- NARRATION MANAGEMENT
-    // Coroutine to Play some Narration with a delay
+    // Coroutine to start the narration with a delay
     private IEnumerator InitialNarrationSequence()
     {
         // Wait for the initial delay before starting the narration
@@ -289,25 +333,42 @@ public class ExperienceManager : MonoBehaviour
 
         PlayNarrationClip();
         pauseLeverCount = false;
+
+        //// Wait until the clip is finished playing
+        //yield return new WaitWhile(() => AudioManager.Instance.narrationSource.isPlaying);
+        //currentNarrationIndex++; // then incremennt
+
     }
 
-    // Function to play the next line of narration
+    // Function to play the next line of narration UNUSED RIGHT NOW
     public void PlayNarrationClip()
     {
-        // Only play the next clip if the current index is valid and narration is not currently playing
-        if (currentNarrationIndex < AudioManager.Instance.narrationClips.Count && !AudioManager.Instance.IsNarrationPlaying())
+        // if narration is not currently playing
+        if (!AudioManager.Instance.IsNarrationPlaying())
         {
-            AudioManager.Instance.PlayNarration(currentNarrationIndex);
-            // Increment the index for the next clip
-            currentNarrationIndex++;
+            // Only play the next clip if the current index is valid
+            if (currentNarrationIndex < AudioManager.Instance.narrationClips.Count)
+            {
+                AudioManager.Instance.PlayNarration(currentNarrationIndex);
+
+                // Increment the index for the next clip
+                //currentNarrationIndex++;
+            }
+            else
+            {
+                Debug.Log("No more narration clips to play");
+                // Here you can trigger the end of experience, scene change, etc.
+            }
         }
         else
         {
-            Debug.Log("No more narration clips to play.");
-            // Here you can trigger the end of experience, scene change, etc.
+            Debug.Log("Audio Running: Clip still playing narration");
         }
     }
 
+    #endregion
+
+    #region Scene Management
     //Scene Management
     // -------------------------------------------------------------------------------------------------------- SCENE MANAGEMENT
     // Call this method when you want to move to the next scene
@@ -344,6 +405,9 @@ public class ExperienceManager : MonoBehaviour
     {
         return SceneManager.GetActiveScene().name == sceneNames[3];
     }
+
+    #endregion
+
 
     //add more scene checks if needed
 
