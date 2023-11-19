@@ -30,9 +30,13 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField]
     private bool planetNarrationClip1Played = false;
 
-    [Header("Names Of Scenes")]
+    [Header("Scene Management")]
     [SerializeField]
     private string[] sceneNames; // Assign this array in the Inspector
+    [SerializeField]
+    private CanvasGroup fadeOverlay;
+    [SerializeField]
+    private float fadeDuration;
 
     [Header("Current Scene")]
     [SerializeField]
@@ -130,6 +134,8 @@ public class ExperienceManager : MonoBehaviour
                 currentNarrationIndex = 0; // set index directly
                 inStreetScene = true;
                 inMainMenu = false;
+                //FadeIn
+                StartCoroutine(FadeIn());
                 if (beginNarration)
                 {
                     beginNarration = false;
@@ -146,6 +152,8 @@ public class ExperienceManager : MonoBehaviour
 
             case "3 - Planet Scene":
                 currentNarrationIndex = 10; // set index directly
+                //FadeIn
+                StartCoroutine(FadeIn()); // THIS MIGHT BREAK!?
                 inPlanetScene = true;
                 inRmidsrScene = false;
                 StartCoroutine(PlayPlanetSceneNarrationSequence());
@@ -260,8 +268,6 @@ public class ExperienceManager : MonoBehaviour
 
     private void ChangeToPlanetScene()
     {
-        // Trigger FADE TO BLACK (if have a fade animation, start it here and wait for it to finish)
-
         // Change the scene after a delay for the fade to black
         StartCoroutine(DelayedSceneChange());
     }
@@ -269,7 +275,9 @@ public class ExperienceManager : MonoBehaviour
     private IEnumerator DelayedSceneChange()
     {
         // Wait for the fade out before changing the scene
-        yield return new WaitForSeconds(3.0f);
+        yield return StartCoroutine(FadeOut());
+
+        //yield return new WaitForSeconds(0.5f);
         ChangeScene(sceneNames[3]);
     }
     #endregion
@@ -371,6 +379,40 @@ public class ExperienceManager : MonoBehaviour
     #region Scene Management
     //Scene Management
     // -------------------------------------------------------------------------------------------------------- SCENE MANAGEMENT
+    private IEnumerator FadeOut()
+    {
+        yield return StartCoroutine(Fade(1));
+    }
+
+    private IEnumerator FadeIn()
+    {
+        //check if fade overlay is not null
+        if(fadeOverlay != null)
+            yield return StartCoroutine(Fade(0));
+        else
+        {
+            // find and set it
+            fadeOverlay = GameObject.FindFirstObjectByType<CanvasGroup>(); // SHOULD only be one canvas group in any scene
+            if (fadeOverlay != null)
+                yield return StartCoroutine(Fade(0));
+        }
+    }
+
+    private IEnumerator Fade(float targetAlpha)
+    {
+        float startAlpha = fadeOverlay.alpha;
+        float time = 0f;
+
+        while (time < fadeDuration)
+        {
+            time += Time.deltaTime;
+            fadeOverlay.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
+            yield return null;
+        }
+
+        fadeOverlay.alpha = targetAlpha; // Ensure it ends at the targetAlpha
+    }
+
     // Call this method when you want to move to the next scene
     public void ChangeScene(string sceneName)
     {

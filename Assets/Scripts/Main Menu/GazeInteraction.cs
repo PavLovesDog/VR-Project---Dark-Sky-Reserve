@@ -1,15 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GazeInteraction : MonoBehaviour
 {
-    public string streetSceneName = "1 - Street Scene"; // The name of the scene you want to load
     public Transform gazeTransform; // Assign the VR camera or head transform here
     public Image loadingImage; // Assign a UI Image that will act as the loading reticule or animation
     public float gazeTime = 3f; // Time in seconds the player has to gaze at the button
     public LayerMask interactableLayer; // Layer mask to filter only interactable objects
     public float maxGazeDistance = 100f; // Set the max distance for the gaze
+
+    [Header("Scene Change")]
+    public string streetSceneName = "1 - Street Scene"; // The name of the scene you want to load
+    [SerializeField]
+    private CanvasGroup fadeOverlay;
+    [SerializeField]
+    private float fadeDuration;
 
     private float gazeTimer = 0f;
     private bool isGazing = false;
@@ -40,8 +47,8 @@ public class GazeInteraction : MonoBehaviour
                 // If the gaze time has been reached
                 if (gazeTimer >= gazeTime)
                 {
-                    // Load the target scene
-                    SceneManager.LoadScene(streetSceneName);
+                    //fade out &  Load the target scene
+                    StartCoroutine(FadeOut());
                 }
             }
         }
@@ -65,5 +72,26 @@ public class GazeInteraction : MonoBehaviour
             Vector3 direction = gazeTransform.TransformDirection(Vector3.forward) * maxGazeDistance;
             Gizmos.DrawRay(gazeTransform.position, direction);
         }
+    }
+
+    private IEnumerator FadeOut()
+    {
+        yield return StartCoroutine(Fade(1));
+        SceneManager.LoadScene(streetSceneName);
+    }
+
+    private IEnumerator Fade(float targetAlpha)
+    {
+        float startAlpha = fadeOverlay.alpha;
+        float time = 0f;
+
+        while (time < fadeDuration)
+        {
+            time += Time.deltaTime;
+            fadeOverlay.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
+            yield return null;
+        }
+
+        fadeOverlay.alpha = targetAlpha; // Ensure it ends at the targetAlpha
     }
 }
