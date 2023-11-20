@@ -381,7 +381,16 @@ public class ExperienceManager : MonoBehaviour
     // -------------------------------------------------------------------------------------------------------- SCENE MANAGEMENT
     private IEnumerator FadeOut()
     {
-        yield return StartCoroutine(Fade(1));
+        //check if fade overlay is not null
+        if (fadeOverlay != null)
+            yield return StartCoroutine(Fade(1));
+        else
+        {
+            // find and set it
+            fadeOverlay = GameObject.FindFirstObjectByType<CanvasGroup>(); // SHOULD only be one canvas group in any scene
+            if (fadeOverlay != null)
+                yield return StartCoroutine(Fade(1));
+        }
     }
 
     private IEnumerator FadeIn()
