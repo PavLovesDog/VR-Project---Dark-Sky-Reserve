@@ -185,10 +185,6 @@ public class ExperienceManager : MonoBehaviour
         // Wait a short time before starting the street scene narration sequence
         yield return new WaitForSeconds(1.0f);
 
-        ////deactuivate Lever UIS
-        //foreach (GameObject UI in leverUIs)
-        //    UI.SetActive(false);
-
         //find light pollution manager as it will not have been set in main menu
         if (lightPollutionManager == null)
             lightPollutionManager = GameObject.FindObjectOfType<LightPollutionManager>(); // as there will only be one

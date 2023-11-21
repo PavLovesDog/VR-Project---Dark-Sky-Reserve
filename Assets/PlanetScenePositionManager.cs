@@ -33,9 +33,17 @@ public class PlanetScenePositionManager : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 1.0f; // Speed of translation between final positions
 
+    [Header("Bezier Curve Points")]
+    [SerializeField]
+    private GameObject curveStartPoint;
+    [SerializeField]
+    private GameObject curveEndPoint;
+
     [Header("Light Switch")]
     [SerializeField]
     private GameObject finalLever; // The final lever to activate
+    [SerializeField]
+    public bool speedUpNight = false;
 
     private int currentPositionIndex = 0; // Tracks the current position index
 
@@ -44,6 +52,7 @@ public class PlanetScenePositionManager : MonoBehaviour
         StartCoroutine(PositionSequence());
         finalLever.SetActive(false); // maybe access and just turn of the renderer
         lightPollution.SetActive(false);
+        speedUpNight = false;
     }
 
     private IEnumerator PositionSequence()
@@ -59,7 +68,10 @@ public class PlanetScenePositionManager : MonoBehaviour
         yield return StartCoroutine(FadeIn());
 
         // Begin moving to position 3
-        StartCoroutine(MoveToPosition(2));
+        yield return StartCoroutine(MoveToPosition(2));
+
+        // Begin moving to the final position
+        yield return StartCoroutine(MoveToPosition(3));
     }
 
     private IEnumerator FadeOut()
@@ -113,16 +125,45 @@ public class PlanetScenePositionManager : MonoBehaviour
             float journeyLength = distance / moveSpeed;
             float elapsedTime = 0f;
 
+            Vector3 controlPoint1 = curveStartPoint.transform.position;// Define the first control point
+            Vector3 controlPoint2 = curveEndPoint.transform.position;
+
             while (elapsedTime < journeyLength)
             {
                 elapsedTime += Time.deltaTime;
                 float t = elapsedTime / journeyLength;
 
-                // Easing effect - here using a simple ease out quadratic function, t * t
-                // You can replace this with any other easing function as needed
-                t = t * t;
+                // Apply different easing functions based on the index
+                if (index == 2) // Moving from position 2 to 3
+                {
+                    // Ease in quadratic function: t^2
+                    t = t * t;
 
-                user.transform.position = Vector3.Lerp(startPosition, endPosition, t);
+                    // lerp
+                    user.transform.position = Vector3.Lerp(startPosition, endPosition, t);
+                }
+                else if (index == 3) // Moving from position 3 to 4 (the final position)
+                {
+                    speedUpNight = true; // set bool to quicken the turning of nigth 
+                    // Ease out quadratic function: -t*(t-2)
+                    t = -t * (t - 2);
+
+                    // Calculate the Bezier curve point
+                    Vector3 m1 = Vector3.Lerp(startPosition, controlPoint1, t);
+                    Vector3 m2 = Vector3.Lerp(controlPoint1, controlPoint2, t);
+                    Vector3 m3 = Vector3.Lerp(controlPoint2, endPosition, t);
+                    Vector3 b1 = Vector3.Lerp(m1, m2, t);
+                    Vector3 b2 = Vector3.Lerp(m2, m3, t);
+                    user.transform.position = Vector3.Lerp(b1, b2, t);
+                }
+                //else
+                //{
+                //    // Use linear interpolation for other positions or implement a different easing
+                //    user.transform.position = Vector3.Lerp(startPosition, endPosition, t);
+                //}
+
+
+                //user.transform.position = Vector3.Lerp(startPosition, endPosition, t);
                 user.transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
                 yield return null;
             }
@@ -131,11 +172,15 @@ public class PlanetScenePositionManager : MonoBehaviour
             user.transform.position = endPosition;
             user.transform.rotation = endRotation;
 
-            // Wait at the final position
-            yield return new WaitForSeconds(waitTimeAtFinal);
+            if (index == positions.Length - 1) // This checks if the current index is the last one
+            {
 
-            // Activate the final lever here if automatic, or just allow the player to interact with it
-            finalLever.SetActive(true);
+                // Wait at the final position
+                yield return new WaitForSeconds(waitTimeAtFinal);
+
+                // Activate the final lever here if automatic, or just allow the player to interact with it
+                finalLever.SetActive(true);
+            }
         }
     }
 

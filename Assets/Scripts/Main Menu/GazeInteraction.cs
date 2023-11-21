@@ -77,6 +77,8 @@ public class GazeInteraction : MonoBehaviour
     private IEnumerator FadeOut()
     {
         yield return StartCoroutine(Fade(1));
+        //Show Disclaimer,
+        //wait for moment
         SceneManager.LoadScene(streetSceneName);
     }
 

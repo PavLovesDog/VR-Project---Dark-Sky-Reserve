@@ -195,7 +195,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9152080135240802154, guid: 25b2dfd1a73ae024898111ab474e101c, type: 3}
+    - {fileID: 9152080135240802133, guid: 25b2dfd1a73ae024898111ab474e101c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 25b2dfd1a73ae024898111ab474e101c, type: 3}
 --- !u!1 &79432024
 GameObject:
@@ -768,6 +770,7 @@ MonoBehaviour:
   pauseLeverCount: 1
   allRMIDSRNarrationPlayed: 0
   planetNarrationClip1Played: 0
+  leverUIs: []
   sceneNames: []
   fadeOverlay: {fileID: 0}
   fadeDuration: 0
