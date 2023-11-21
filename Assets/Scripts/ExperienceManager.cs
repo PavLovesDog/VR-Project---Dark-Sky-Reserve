@@ -30,6 +30,11 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField]
     private bool planetNarrationClip1Played = false;
 
+    [Header("UI Elements")]
+    [SerializeField]
+    private GameObject[] leverUIs;
+    
+
     [Header("Scene Management")]
     [SerializeField]
     private string[] sceneNames; // Assign this array in the Inspector
@@ -112,9 +117,11 @@ public class ExperienceManager : MonoBehaviour
     private void Start()
     {
         //BELOW WONT BE REQUIRED WHEN WE START FROM MAIN MENU. leave as is  for now
-        // Start the initial sequence 
-        StartCoroutine(InitialNarrationSequence());
+        // Start the initial sequence  DEBUG
+        //StartCoroutine(InitialNarrationSequence());
         pauseLeverCount = true;
+
+        
     }
 
     // This method is called every time a scene is loaded
@@ -134,6 +141,9 @@ public class ExperienceManager : MonoBehaviour
                 currentNarrationIndex = 0; // set index directly
                 inStreetScene = true;
                 inMainMenu = false;
+                //deactuivate Lever UIS
+                foreach (GameObject UI in leverUIs)
+                    UI.SetActive(false);
                 //FadeIn
                 StartCoroutine(FadeIn());
                 if (beginNarration)
@@ -175,6 +185,10 @@ public class ExperienceManager : MonoBehaviour
         // Wait a short time before starting the street scene narration sequence
         yield return new WaitForSeconds(1.0f);
 
+        ////deactuivate Lever UIS
+        //foreach (GameObject UI in leverUIs)
+        //    UI.SetActive(false);
+
         //find light pollution manager as it will not have been set in main menu
         if (lightPollutionManager == null)
             lightPollutionManager = GameObject.FindObjectOfType<LightPollutionManager>(); // as there will only be one
@@ -182,6 +196,48 @@ public class ExperienceManager : MonoBehaviour
 
         // NOTE* scene change is handled in EndOfStreetSceneLevelClips() below,
         // it is called at the end of clips played in street scene for now
+    }
+
+    // Coroutine to start the narration with a delay
+    private IEnumerator InitialNarrationSequence()
+    {
+        // Wait for the initial delay before starting the narration
+        yield return new WaitForSeconds(initialNarrationDelay);
+
+        // Start the first narration clip
+        PlayStreetNarrationClip();
+        pauseLeverCount = false; //allow for counting of first trigger after first clip starts!
+
+        //Wait for first narration clip to finish
+        yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
+        leverUIs[0].SetActive(true); //Allow for first UI element to be visible
+    }
+
+    // Coroutine to be used if a delay before starting of next line is required
+    private IEnumerator ContinueNarration()
+    {
+        pauseLeverCount = true;
+        // Wait a short time before starting the next narration sequence
+        yield return new WaitForSeconds(narrationDelay);
+
+        PlayStreetNarrationClip();
+        pauseLeverCount = false;
+
+        //Wait for first narration clip to finish
+        yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
+        //display next Lever UI
+        if (uniqueDeactivatedLeversCount == 1)
+        {
+            leverUIs[1].SetActive(true);
+        }
+        else if (uniqueDeactivatedLeversCount == 2)
+        {
+            leverUIs[2].SetActive(true);
+        }
+        else if (uniqueDeactivatedLeversCount == 3)
+        {
+            leverUIs[3].SetActive(true);
+        }
     }
 
     // Function to listen for lever/light states
@@ -198,6 +254,12 @@ public class ExperienceManager : MonoBehaviour
 
                 // Increment the count of unique deactivated levers
                 uniqueDeactivatedLeversCount++;
+
+                //deactiuvate UI elements
+                foreach(GameObject currentUI in leverUIs)
+                {
+                    currentUI.SetActive(false);
+                }
 
                 // Play the next narration clip with slight delay
                 StartCoroutine(ContinueNarration());
@@ -327,27 +389,7 @@ public class ExperienceManager : MonoBehaviour
     #region Narration Management
     // NARRATION MANAGEMENT
     //---------------------------------------------------------------------------------------- NARRATION MANAGEMENT
-    // Coroutine to start the narration with a delay
-    private IEnumerator InitialNarrationSequence()
-    {
-        // Wait for the initial delay before starting the narration
-        yield return new WaitForSeconds(initialNarrationDelay);
-
-        // Start the first narration clip
-        PlayStreetNarrationClip();
-        pauseLeverCount = false; //allow fir counting of first trigger after first clip starts!
-    }
-
-    // Coroutine to be used if a delay before starting of next line is required
-    private IEnumerator ContinueNarration()
-    {
-        pauseLeverCount = true;
-        // Wait a short time before starting the next narration sequence
-        yield return new WaitForSeconds(narrationDelay);
-
-        PlayStreetNarrationClip();
-        pauseLeverCount = false;
-    }
+   
 
     // Function to play the next line of narration UNUSED RIGHT NOW
     public void PlayStreetNarrationClip()
