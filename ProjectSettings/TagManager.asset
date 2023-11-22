@@ -11,6 +11,7 @@ TagManager:
   - Hand
   - CinemachineTarget
   - BeginButton
+  - ContinueButton
   layers:
   - Default
   - TransparentFX

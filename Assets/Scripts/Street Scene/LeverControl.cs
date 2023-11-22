@@ -16,38 +16,41 @@ public class LeverControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Hand") && Time.time - lastActivationTime >= activationCooldown)
+        if (ExperienceManager.Instance.canInteractLever)
         {
-            Debug.Log("Lever TOUCHED Hand");
-
-            // If a rotation coroutine is running, stop it
-            if (rotationCoroutine != null)
+            if (other.gameObject.CompareTag("Hand") && Time.time - lastActivationTime >= activationCooldown)
             {
-                StopCoroutine(rotationCoroutine);
-                AudioManager.Instance.StopSFX();
+                Debug.Log("Lever TOUCHED Hand");
+
+                // If a rotation coroutine is running, stop it
+                if (rotationCoroutine != null)
+                {
+                    StopCoroutine(rotationCoroutine);
+                    AudioManager.Instance.StopSFX();
+                }
+
+                // Determine the new target rotation based on the current state
+                Vector3 targetRotation = isOn ? offRotation : onRotation;
+
+                // Start the new rotation coroutine and store its reference
+                rotationCoroutine = StartCoroutine(RotateLever(targetRotation));
+
+                //play audio dependent on state
+                if (isOn)
+                    AudioManager.Instance.PlaySFX(1, 0.35f, Random.Range(0.5f, 1.0f)); // power down
+                else // is off
+                    AudioManager.Instance.PlaySFX(0, 0.65f, Random.Range(0.5f, 1.0f)); // power up sound
+
+                // Toggle the state of the lever
+                isOn = !isOn;
+
+                // Update last activation time
+                lastActivationTime = Time.time;
             }
-
-            // Determine the new target rotation based on the current state
-            Vector3 targetRotation = isOn ? offRotation : onRotation;
-
-            // Start the new rotation coroutine and store its reference
-            rotationCoroutine = StartCoroutine(RotateLever(targetRotation));
-
-            //play audio dependent on state
-            if(isOn)
-                AudioManager.Instance.PlaySFX(1, 0.35f, Random.Range(0.5f, 1.0f)); // power down
-            else // is off
-                AudioManager.Instance.PlaySFX(0, 0.65f, Random.Range(0.5f, 1.0f)); // power up sound
-            
-            // Toggle the state of the lever
-            isOn = !isOn;
-
-            // Update last activation time
-            lastActivationTime = Time.time;
-        }
-        else
-        {
-            Debug.Log("Lever is cooling down.");
+            else
+            {
+                Debug.Log("Lever is cooling down.");
+            }
         }
     }
 

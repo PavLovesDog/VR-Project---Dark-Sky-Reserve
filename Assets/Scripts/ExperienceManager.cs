@@ -22,7 +22,9 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField]
     private bool beginNarration = true;
     [SerializeField]
-    private bool pauseLeverCount = true;
+    public bool pauseLeverCount = true;
+    [SerializeField]
+    public bool canInteractLever = false;
 
     [Header("Narration Clips")]
     [SerializeField]
@@ -32,8 +34,11 @@ public class ExperienceManager : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField]
-    private GameObject[] leverUIs;
-    
+    private Canvas[] leverUIs;
+
+    [Header("Bloom Indicators")]
+    [SerializeField]
+    private GrowShrink[] bloom;
 
     [Header("Scene Management")]
     [SerializeField]
@@ -141,9 +146,9 @@ public class ExperienceManager : MonoBehaviour
                 currentNarrationIndex = 0; // set index directly
                 inStreetScene = true;
                 inMainMenu = false;
-                //deactuivate Lever UIS
-                foreach (GameObject UI in leverUIs)
-                    UI.SetActive(false);
+                //FIND & deactuivate Lever UIS
+                foreach (Canvas UI in leverUIs)
+                    UI.enabled = false;
                 //FadeIn
                 StartCoroutine(FadeIn());
                 if (beginNarration)
@@ -202,11 +207,14 @@ public class ExperienceManager : MonoBehaviour
 
         // Start the first narration clip
         PlayStreetNarrationClip();
-        pauseLeverCount = false; //allow for counting of first trigger after first clip starts!
 
         //Wait for first narration clip to finish
         yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
-        leverUIs[0].SetActive(true); //Allow for first UI element to be visible
+        pauseLeverCount = false; //allow for counting of first trigger after first clip starts!
+
+        leverUIs[0].enabled = true; //Allow for first UI element to be visible
+        bloom[0].oscilate = true; // set first levers bloom to expand/contract
+        canInteractLever = true;// activate ability to hit levers
     }
 
     // Coroutine to be used if a delay before starting of next line is required
@@ -217,22 +225,28 @@ public class ExperienceManager : MonoBehaviour
         yield return new WaitForSeconds(narrationDelay);
 
         PlayStreetNarrationClip();
-        pauseLeverCount = false;
 
-        //Wait for first narration clip to finish
+        //Wait for narration clip to finish
         yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
+        
+        pauseLeverCount = false; // allow counting of levers
+        canInteractLever = true; // allow use of levers
+
         //display next Lever UI
         if (uniqueDeactivatedLeversCount == 1)
         {
-            leverUIs[1].SetActive(true);
+            leverUIs[1].enabled = true;
+            bloom[1].oscilate = true;
         }
         else if (uniqueDeactivatedLeversCount == 2)
         {
-            leverUIs[2].SetActive(true);
+            leverUIs[2].enabled = true;
+            bloom[2].oscilate = true;
         }
         else if (uniqueDeactivatedLeversCount == 3)
         {
-            leverUIs[3].SetActive(true);
+            leverUIs[3].enabled = true;
+            bloom[3].oscilate = true;
         }
     }
 
@@ -252,10 +266,14 @@ public class ExperienceManager : MonoBehaviour
                 uniqueDeactivatedLeversCount++;
 
                 //deactiuvate UI elements
-                foreach(GameObject currentUI in leverUIs)
-                {
-                    currentUI.SetActive(false);
-                }
+                foreach(Canvas currentUI in leverUIs)
+                    currentUI.enabled = false;
+
+                //deactivate bloom oscilations
+                foreach (GrowShrink blooms in bloom)
+                    blooms.oscilate = false;
+
+                canInteractLever = false; // Stop interactions with Levers
 
                 // Play the next narration clip with slight delay
                 StartCoroutine(ContinueNarration());
@@ -387,7 +405,7 @@ public class ExperienceManager : MonoBehaviour
     //---------------------------------------------------------------------------------------- NARRATION MANAGEMENT
    
 
-    // Function to play the next line of narration UNUSED RIGHT NOW
+    // Function to play the next line of narration NOTE WHY AM I USING THIS?? Seems like an useless added function??
     public void PlayStreetNarrationClip()
     {
         // if narration is not currently playing

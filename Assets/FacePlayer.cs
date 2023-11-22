@@ -21,6 +21,5 @@ public class FacePlayer : MonoBehaviour
         //Vector3 lookDir = (targetPos - transform.position);
         //Quaternion lookR = Quaternion.LookRotation(lookDir, Vector3.up);
         //transform.rotation = lookR * Quaternion.Euler(90, yOffset, 0);
-
     }
 }
