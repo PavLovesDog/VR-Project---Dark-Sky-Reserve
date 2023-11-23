@@ -13,6 +13,10 @@ TagManager:
   - BeginButton
   - ContinueButton
   - FadeCanvas
+  - Lever1Canvas
+  - Lever2Canvas
+  - Lever3Canvas
+  - Lever4Canvas
   layers:
   - Default
   - TransparentFX

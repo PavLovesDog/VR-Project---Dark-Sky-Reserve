@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/3 - Planet Scene.unity
     guid: 165575ecdab344d44b9ef622866131db
+  - enabled: 1
+    path: Assets/Scenes/4 - Credits.unity
+    guid: 39e486003db1e0c4b8201ab42ccbaf67
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 34b03cde0adfc844aa9ca29996cc9706,
       type: 2}

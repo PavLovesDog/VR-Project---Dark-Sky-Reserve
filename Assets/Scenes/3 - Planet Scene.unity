@@ -413,6 +413,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Experience Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 5390681723131637602, guid: 2e8d6925da1872a42862dd198eb82d96,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5390681723131637603, guid: 2e8d6925da1872a42862dd198eb82d96,
         type: 3}
       propertyPath: canInteractLever
@@ -422,6 +427,16 @@ PrefabInstance:
         type: 3}
       propertyPath: initialNarrationDelay
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5390681723131637603, guid: 2e8d6925da1872a42862dd198eb82d96,
+        type: 3}
+      propertyPath: sceneNames.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5390681723131637603, guid: 2e8d6925da1872a42862dd198eb82d96,
+        type: 3}
+      propertyPath: sceneNames.Array.data[4]
+      value: 4 - Credits
       objectReference: {fileID: 0}
     - target: {fileID: 5390681723131637612, guid: 2e8d6925da1872a42862dd198eb82d96,
         type: 3}
@@ -1254,7 +1269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &530652599
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2600,6 +2615,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 8074067602543627, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
 --- !u!1 &1283860013
@@ -3482,7 +3501,7 @@ GameObject:
   - component: {fileID: 1999137144}
   m_Layer: 5
   m_Name: Finish Canvas
-  m_TagString: FadeCanvas
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -55,6 +55,7 @@ public class PlanetScenePositionManager : MonoBehaviour
         StartCoroutine(PositionSequence());
         finalLever.SetActive(false); // maybe access and just turn of the renderer
         lightPollution.SetActive(false);
+        endCanvas.enabled = false;
         speedUpNight = false;
     }
 
@@ -159,11 +160,6 @@ public class PlanetScenePositionManager : MonoBehaviour
                     Vector3 b2 = Vector3.Lerp(m2, m3, t);
                     user.transform.position = Vector3.Lerp(b1, b2, t);
                 }
-                //else
-                //{
-                //    // Use linear interpolation for other positions or implement a different easing
-                //    user.transform.position = Vector3.Lerp(startPosition, endPosition, t);
-                //}
 
 
                 //user.transform.position = Vector3.Lerp(startPosition, endPosition, t);
@@ -183,15 +179,18 @@ public class PlanetScenePositionManager : MonoBehaviour
 
                 // Activate the final lever here if automatic, or just allow the player to interact with it
                 finalLever.SetActive(true);
+                //StartCoroutine(OnFinalLeverActivated()); // TEMP
             }
         }
     }
 
-    // Public method to call when the final lever is activated, if required
-    public void OnFinalLeverActivated()
-    {
-        // Trigger the final piece of narration or any other required action
-    }
+    //// Public method to call when the final lever is activated, if required
+    //public IEnumerator OnFinalLeverActivated()
+    //{
+    //    // Trigger the final piece of narration or any other required action
+    //    yield return new WaitForSeconds(12.0f);
+    //    endCanvas.enabled = true;
+    //}
 
     //have access to 3 locations/positions (set in inspector)
     //have access to a dark filter/overlay to black out view

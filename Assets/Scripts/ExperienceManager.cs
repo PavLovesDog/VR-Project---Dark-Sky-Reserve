@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.Presets;
 
 public class ExperienceManager : MonoBehaviour
 {
@@ -41,6 +41,8 @@ public class ExperienceManager : MonoBehaviour
     private GrowShrink[] bloom;
 
     [Header("Scene Management")]
+    [SerializeField]
+    private Preset ExperienceManagerSettings;
     [SerializeField]
     private string[] sceneNames; // Assign this array in the Inspector
     [SerializeField]
@@ -98,16 +100,6 @@ public class ExperienceManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    //THIS WON"T WORK STARTING FEROM THE MAIN MENU!!! Account for the searching of light pollution manager...
-    private void OnEnable()
-    {   
-        //subcsribe to events in light pollution manager
-        if (lightPollutionManager != null)
-        {
-            lightPollutionManager.OnSocketStateChange += HandleSocketStateChange;
-        }
-    }
-
     private void OnDisable()
     {
         if (lightPollutionManager != null)
@@ -143,12 +135,10 @@ public class ExperienceManager : MonoBehaviour
                 break;
 
             case "1 - Street Scene":
+                SetExperienceManagerSettings(); // set up the inital settings of the ExperienceManger
                 currentNarrationIndex = 0; // set index directly
                 inStreetScene = true;
                 inMainMenu = false;
-                //FIND & deactuivate Lever UIS
-                foreach (Canvas UI in leverUIs)
-                    UI.enabled = false;
                 //FadeIn
                 StartCoroutine(FadeIn());
                 if (beginNarration)
@@ -185,6 +175,36 @@ public class ExperienceManager : MonoBehaviour
     #region Street Scene Logic
     // Street Scene logic
     // --------------------------------------------------------------------------------------- STREET SCENE
+    
+    //Function to set up necessary references for Experienmce Manager
+    private void SetExperienceManagerSettings()
+    {
+        // Assign leverUIs Canvases by tag
+        leverUIs[0] = GameObject.FindGameObjectWithTag("Lever1Canvas").GetComponent<Canvas>();
+        leverUIs[1] = GameObject.FindGameObjectWithTag("Lever2Canvas").GetComponent<Canvas>();
+        leverUIs[2] = GameObject.FindGameObjectWithTag("Lever3Canvas").GetComponent<Canvas>();
+        leverUIs[3] = GameObject.FindGameObjectWithTag("Lever4Canvas").GetComponent<Canvas>();
+
+        // Assign bloomIndicators GrowShrink objects by name
+        bloom[0] = GameObject.Find("sphere_bloom_red").GetComponent<GrowShrink>();
+        bloom[1] = GameObject.Find("sphere_bloom_red (1)").GetComponent<GrowShrink>();
+        bloom[2] = GameObject.Find("sphere_bloom_red (2)").GetComponent<GrowShrink>();
+        bloom[3] = GameObject.Find("sphere_bloom_red (3)").GetComponent<GrowShrink>();
+
+        // Assign fade canvas
+        fadeOverlay = GameObject.FindGameObjectWithTag("FadeCanvas").GetComponent<CanvasGroup>();
+
+        //assign light pollution manager for street scene
+        lightPollutionManager = GameObject.FindObjectOfType<LightPollutionManager>();
+
+        //subcsribe to events in light pollution manager
+        if (lightPollutionManager != null)
+        {
+            lightPollutionManager.OnSocketStateChange += HandleSocketStateChange;
+        }
+
+    }
+
     private IEnumerator InitialStreetSceneNarration()
     {
         // Wait a short time before starting the street scene narration sequence
@@ -377,9 +397,10 @@ public class ExperienceManager : MonoBehaviour
 
         //wait for a few seconds
         yield return new WaitForSeconds(4.0f);
-        StartCoroutine(FadeOut());
-        
+        yield return StartCoroutine(FadeOut());
+        yield return new WaitForSeconds(2.0f);
         //Fade out and change scene to credit scene?
+        ChangeScene(sceneNames[4]); // load credits
         //begin credit sequence?
         //display reset button, interacatble by gazing
 
