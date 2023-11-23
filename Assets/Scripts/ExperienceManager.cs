@@ -167,8 +167,8 @@ public class ExperienceManager : MonoBehaviour
 
             case "3 - Planet Scene":
                 currentNarrationIndex = 10; // set index directly
-                //FadeIn
-                StartCoroutine(FadeIn()); // THIS MIGHT BREAK!?
+                //FadeIn handled in position manager
+                //StartCoroutine(FadeIn()); // THIS MIGHT BREAK!? may need to re-find the fade canvas?
                 inPlanetScene = true;
                 inRmidsrScene = false;
                 StartCoroutine(PlayPlanetSceneNarrationSequence());
@@ -363,28 +363,26 @@ public class ExperienceManager : MonoBehaviour
     // --------------------------------------------------------------------------------------- PLANET SCENE
     private IEnumerator PlayPlanetSceneNarrationSequence()
     {
-        // Wait a short time before starting the planet scene narration sequence
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
+        //play the first narration clip
+        AudioManager.Instance.PlayNarration(currentNarrationIndex);
+        yield return new WaitWhile(() => AudioManager.Instance.narrationSource.isPlaying); // wait for it to complete
+        currentNarrationIndex++; // increment the narration index.
+        //wait for bool to trigger from the lever control script
+        yield return new WaitWhile(() => PlanetLeverControl.Instance.isOn);
+        //once bool is tripped (this will be the turning off of the lights. i.e. level pulled down)
+        yield return new WaitForSeconds(1.5f);
+        // play the final clip
+        AudioManager.Instance.PlayNarration(currentNarrationIndex);
 
-        // Start playing from the current index (which should be set to 10 when this scene starts)
-        while (currentNarrationIndex <= 11)
-        {
-            // Only enqueue the clip if the narration is not playing
-            if (!AudioManager.Instance.IsNarrationPlaying())
-            {
-                AudioManager.Instance.PlayNarration(currentNarrationIndex);
-            }
-
-            yield return new WaitWhile(() => AudioManager.Instance.narrationSource.isPlaying);
-            currentNarrationIndex++; //----------------------------------------------------------------------------------------INDEX INCREMENT
-            yield return new WaitForSeconds(1.0f);
-        }
+        //wait for a few seconds
+        yield return new WaitForSeconds(4.0f);
+        StartCoroutine(FadeOut());
         
-        // Trigger any end-of-experience actions, such as sshowing credits
-        // ...
+        //Fade out and change scene to credit scene?
+        //begin credit sequence?
+        //display reset button, interacatble by gazing
 
-        // Optionally, after all clips and credits are done, provide a way to reset to the main menu
-        ShowResetButton();
     }
 
     public void ShowResetButton()
@@ -443,7 +441,7 @@ public class ExperienceManager : MonoBehaviour
         else
         {
             // find and set it
-            fadeOverlay = GameObject.FindFirstObjectByType<CanvasGroup>(); // SHOULD only be one canvas group in any scene
+            fadeOverlay = GameObject.FindGameObjectWithTag("FadeCanvas").GetComponent<CanvasGroup>();
             if (fadeOverlay != null)
                 yield return StartCoroutine(Fade(1));
         }
@@ -457,7 +455,7 @@ public class ExperienceManager : MonoBehaviour
         else
         {
             // find and set it
-            fadeOverlay = GameObject.FindFirstObjectByType<CanvasGroup>(); // SHOULD only be one canvas group in any scene
+            fadeOverlay = GameObject.FindGameObjectWithTag("FadeCanvas").GetComponent<CanvasGroup>();
             if (fadeOverlay != null)
                 yield return StartCoroutine(Fade(0));
         }

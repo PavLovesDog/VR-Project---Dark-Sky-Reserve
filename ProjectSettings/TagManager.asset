@@ -12,6 +12,7 @@ TagManager:
   - CinemachineTarget
   - BeginButton
   - ContinueButton
+  - FadeCanvas
   layers:
   - Default
   - TransparentFX

@@ -123,7 +123,6 @@ public class ChangeMaterial : MonoBehaviour
         // Disable BLOOM png objects
         foreach (Transform bloom in blooms)
         {
-            Debug.Log("Bloom sprite disabled: " + bloom.name);
             SpriteRenderer bloomSprite = bloom.GetComponent<SpriteRenderer>();
             bloomSprite.enabled = false;
         }
@@ -135,7 +134,6 @@ public class ChangeMaterial : MonoBehaviour
         // Enable BLOOM png objects
         foreach (Transform bloom in blooms)
         {
-            Debug.Log("Bloom sprite enabled: " + bloom.name);
             SpriteRenderer bloomSprite = bloom.GetComponent<SpriteRenderer>();
             bloomSprite.enabled = true;
         }

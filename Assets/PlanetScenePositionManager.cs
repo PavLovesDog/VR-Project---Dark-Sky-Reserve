@@ -17,6 +17,9 @@ public class PlanetScenePositionManager : MonoBehaviour
     [SerializeField]
     private CanvasGroup fadeOverlay; // Assign a UI CanvasGroup that will act as the fade overlay
 
+    [SerializeField]
+    private Canvas endCanvas; // Assign a UI CanvasGroup that will act as the fade overlay
+
     [Header("Timing")]
     [SerializeField]
     private float fadeDuration = 2.0f; // Time it takes to fade in/out

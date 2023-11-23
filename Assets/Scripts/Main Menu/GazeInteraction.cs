@@ -56,6 +56,8 @@ public class GazeInteraction : MonoBehaviour
                 {
                     //fade out &  Load the target scene
                     StartCoroutine(ShowDisclaimers());
+
+                    //Instead activate scene specific manager to do the scene logic
                 }
             }
 
