@@ -59,6 +59,8 @@ public class ExperienceManager : MonoBehaviour
     private bool inRmidsrScene;
     [SerializeField]
     private bool inPlanetScene;
+    [SerializeField]
+    private bool inCreditsScene;
 
     #region DEBUGGING
     //DEBUGGING ======================================================================= DEBUG
@@ -129,7 +131,7 @@ public class ExperienceManager : MonoBehaviour
         {
             case "0 - Main Menu":
                 // Handle main menu logic, potentially resetting flags
-                inPlanetScene = false;
+                inCreditsScene = false;
                 inMainMenu = true;
                 ResetExperience();
                 break;
@@ -163,7 +165,14 @@ public class ExperienceManager : MonoBehaviour
                 inRmidsrScene = false;
                 StartCoroutine(PlayPlanetSceneNarrationSequence());
                 break;
-                // Add cases for other scenes if necessary
+            // Add cases for other scenes if necessary
+
+            case "4 - Credits":
+                inPlanetScene = false;
+                inCreditsScene = true;
+                StartCoroutine(FadeIn());
+                StartCoroutine(StartCreditSceneLogic());
+                break;
         }
     }
 
@@ -419,10 +428,25 @@ public class ExperienceManager : MonoBehaviour
 
     #endregion
 
+    #region Credits Scene Logic
+    // Credits Scene logic
+    // --------------------------------------------------------------------------------------- CREDITS SCENE
+    private IEnumerator StartCreditSceneLogic()
+    {
+        // wait for 10 seconds so people can read first screen
+        yield return new WaitForSeconds(8);
+
+        //engage the following screens
+        CreditsSceneManager.Instance.ShowCreditsWrapper();
+
+    }
+
+    #endregion
+
     #region Narration Management
     // NARRATION MANAGEMENT
     //---------------------------------------------------------------------------------------- NARRATION MANAGEMENT
-   
+
 
     // Function to play the next line of narration NOTE WHY AM I USING THIS?? Seems like an useless added function??
     public void PlayStreetNarrationClip()

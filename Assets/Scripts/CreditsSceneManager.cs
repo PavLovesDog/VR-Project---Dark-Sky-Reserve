@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CreditsSceneManager : MonoBehaviour
 {
+    public static CreditsSceneManager Instance { get; private set; }
+
     [SerializeField]
     private CanvasGroup fadeOverlay;
     [SerializeField]
@@ -17,6 +19,16 @@ public class CreditsSceneManager : MonoBehaviour
 
     private void Awake()
     {
+        //create singleton
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         // Find the GazeInteraction script and hook up the events
         GazeInteraction gazeInteraction = FindObjectOfType<GazeInteraction>();
         if (gazeInteraction)

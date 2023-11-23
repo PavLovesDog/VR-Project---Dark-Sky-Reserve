@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: TorrensWILGroup
-  productName: VR - Dark Sky Reserve v0.1.3
+  productName: VR - Dark Sky Reserve v0.1.4
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -135,7 +135,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1.3
+  bundleVersion: 0.1.4
   preloadedAssets:
   - {fileID: 11400000, guid: 34b03cde0adfc844aa9ca29996cc9706, type: 2}
   - {fileID: -8940053904454088213, guid: 302641a58c6814541a8088346b67107f, type: 2}
