@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEditor.Presets;
+//using UnityEditor.Presets;
 
 public class ExperienceManager : MonoBehaviour
 {
@@ -41,8 +41,8 @@ public class ExperienceManager : MonoBehaviour
     private GrowShrink[] bloom;
 
     [Header("Scene Management")]
-    [SerializeField]
-    private Preset ExperienceManagerSettings;
+    //[SerializeField]
+    //private Preset ExperienceManagerSettings;
     [SerializeField]
     private string[] sceneNames; // Assign this array in the Inspector
     [SerializeField]
