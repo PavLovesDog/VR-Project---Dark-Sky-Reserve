@@ -22884,12 +22884,12 @@ PrefabInstance:
     - target: {fileID: 9152080135240802155, guid: 25b2dfd1a73ae024898111ab474e101c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.098100014
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 9152080135240802155, guid: 25b2dfd1a73ae024898111ab474e101c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.134
+      value: 0.145
       objectReference: {fileID: 0}
     - target: {fileID: 9152080135240802155, guid: 25b2dfd1a73ae024898111ab474e101c,
         type: 3}
@@ -24189,6 +24189,11 @@ PrefabInstance:
       propertyPath: correctGrabbable
       value: 
       objectReference: {fileID: 1360550749}
+    - target: {fileID: 6128126183101372764, guid: 688106848e01d0249beb3ddc0c708d63,
+        type: 3}
+      propertyPath: lockYAxis
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6128126183241719817, guid: 688106848e01d0249beb3ddc0c708d63,
         type: 3}
       propertyPath: LPM
@@ -24219,6 +24224,21 @@ PrefabInstance:
       propertyPath: correctGrabbable
       value: 
       objectReference: {fileID: 862342610}
+    - target: {fileID: 6128126183523853387, guid: 688106848e01d0249beb3ddc0c708d63,
+        type: 3}
+      propertyPath: lockYAxis
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6128126184290749453, guid: 688106848e01d0249beb3ddc0c708d63,
+        type: 3}
+      propertyPath: lockYAxis
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6128126184485867238, guid: 688106848e01d0249beb3ddc0c708d63,
+        type: 3}
+      propertyPath: lockYAxis
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6470005367582165589, guid: 688106848e01d0249beb3ddc0c708d63,
         type: 3}
       propertyPath: m_Name
