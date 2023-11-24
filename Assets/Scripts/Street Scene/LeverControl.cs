@@ -16,7 +16,7 @@ public class LeverControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (ExperienceManager.Instance.canInteractLever)
+        if (ExperienceManager.Instance.canInteractLever && isOn) // ONLY interactable if they are ON -----------------------------------  <-------TEST THIS
         {
             if (other.gameObject.CompareTag("Hand") && Time.time - lastActivationTime >= activationCooldown)
             {

@@ -180,6 +180,7 @@ public class ExperienceManager : MonoBehaviour
     {
         beginNarration = true;
         // Reset other flags HERE as needed
+        canInteractLever = false;
     }
     #region Street Scene Logic
     // Street Scene logic
