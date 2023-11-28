@@ -360,11 +360,17 @@ public class ExperienceManager : MonoBehaviour
                 AudioManager.Instance.PlayNarration(currentNarrationIndex);
             }
 
+            if(currentNarrationIndex == 8)
+            {
+                //Start visual manager tthings
+                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence());
+            }
             yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
             currentNarrationIndex++; // incremennt index -------------------------------------------------------------------------INDEX INCREMENT
 
             // Additionally, wait a bit between clips
             yield return new WaitForSeconds(1.0f);
+
 
         }
 
