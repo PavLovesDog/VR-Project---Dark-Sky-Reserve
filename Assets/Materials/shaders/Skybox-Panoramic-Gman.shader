@@ -39,10 +39,17 @@ SubShader {
         half _Exposure;
         float _Rotation;
         float _RotationX;
-#ifndef _MAPPING_6_FRAMES_LAYOUT
+        // delcerations moved from ifndef block
         bool _MirrorOnBack;
         int _ImageType;
         int _Layout;
+        //float2 image180ScaleAndCutoff;
+
+#ifndef _MAPPING_6_FRAMES_LAYOUT
+        // Declarations moved outside of the conditional block
+        //bool _MirrorOnBack;
+        //int _ImageType;
+        //int _Layout;
 #endif
 
 #ifdef _MAPPING_LATITUDE_LONGITUDE_LAYOUT
@@ -123,21 +130,44 @@ SubShader {
             float4 faceYCoordLayouts : TEXCOORD4;
             float4 faceZCoordLayouts : TEXCOORD5;
 #else
-            float2 image180ScaleAndCutoff : TEXCOORD1;
-            float4 layout3DScaleAndOffset : TEXCOORD2;
 #endif
+            float4 layout3DScaleAndOffset : TEXCOORD6;
+            float2 image180ScaleAndCutoff : TEXCOORD7;
             UNITY_VERTEX_OUTPUT_STEREO
         };
 
-        v2f vert (appdata_t v)
+        v2f vert(appdata_t v)
         {
             v2f o;
+
+            /// Initialize all fields to default values
+            o.vertex = float4(0, 0, 0, 0);
+            o.texcoord = float3(0, 0, 0);
+            //o.layout = float3(0, 0, 0); // Default for _MAPPING_6_FRAMES_LAYOUT
+            //o.edgeSize = float4(0, 0, 0, 0); // Default for _MAPPING_6_FRAMES_LAYOUT
+            //o.faceXCoordLayouts = float4(0, 0, 0, 0); // Default for _MAPPING_6_FRAMES_LAYOUT
+            //o.faceYCoordLayouts = float4(0, 0, 0, 0); // Default for _MAPPING_6_FRAMES_LAYOUT
+            //o.faceZCoordLayouts = float4(0, 0, 0, 0); // Default for _MAPPING_6_FRAMES_LAYOUT
+            o.layout3DScaleAndOffset = float4(0, 0, 0, 0); // Default for other mappings
+            o.image180ScaleAndCutoff = float2(0, 0); // Default for all mappings
+
             UNITY_SETUP_INSTANCE_ID(v);
             UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
             float3 rotatedY = RotateAroundYInDegrees(v.vertex, _Rotation);
             float3 rotatedX = RotateAroundXInDegrees(rotatedY, _RotationX);
             o.vertex = UnityObjectToClipPos(rotatedX);
             o.texcoord = v.vertex.xyz;
+
+            float2 localImage180ScaleAndCutoff;
+            // Calculate constant horizontal scale and cutoff for 180 (vs 360) image type
+            if (_ImageType == 0)  // 360 degree
+                localImage180ScaleAndCutoff = float2(1.0, 1.0);
+            else  // 180 degree
+                localImage180ScaleAndCutoff = float2(2.0, _MirrorOnBack ? 1.0 : 0.5);
+
+            // Assign the local variable to the struct member
+            o.image180ScaleAndCutoff = localImage180ScaleAndCutoff;
+
 #ifdef _MAPPING_6_FRAMES_LAYOUT
             // layout and edgeSize are solely based on texture dimensions and can thus be precalculated in the vertex shader.
             float sourceAspect = float(_MainTex_TexelSize.z) / float(_MainTex_TexelSize.w);
@@ -193,11 +223,8 @@ SubShader {
             o.edgeSize.xy = _MainTex_TexelSize.xy * 0.5 / o.layout.yz - 0.5;
             o.edgeSize.zw = -o.edgeSize.xy;
 #else // !_MAPPING_6_FRAMES_LAYOUT
-            // Calculate constant horizontal scale and cutoff for 180 (vs 360) image type
-            if (_ImageType == 0)  // 360 degree
-                o.image180ScaleAndCutoff = float2(1.0, 1.0);
-            else  // 180 degree
-                o.image180ScaleAndCutoff = float2(2.0, _MirrorOnBack ? 1.0 : 0.5);
+            
+            float2 layout3DScaleAndOffset;
             // Calculate constant scale and offset for 3D layouts
             if (_Layout == 0) // No 3D layout
                 o.layout3DScaleAndOffset = float4(0,0,1,1);
@@ -220,15 +247,17 @@ SubShader {
             tc = ToCubeCoords(i.texcoord, i.layout, i.edgeSize, i.faceXCoordLayouts, i.faceYCoordLayouts, i.faceZCoordLayouts);
 #endif
 #ifdef _MAPPING_FISHEYE_LAYOUT
+            float2 image180ScaleAndCutoff;
+            float2 layout3DScaleAndOffset;
             tc = ToFisheyeCoords(i.texcoord);
-            if (tc.x > i.image180ScaleAndCutoff[1])
+            if (tc.x > i.image180ScaleAndCutoff[1]) // Error
                 return half4(0,0,0,1);
             tc.x = fmod(tc.x*i.image180ScaleAndCutoff[0], 1);
             tc = (tc + i.layout3DScaleAndOffset.xy) * i.layout3DScaleAndOffset.zw;
 #endif
 #ifdef _MAPPING_LATITUDE_LONGITUDE_LAYOUT
             tc = ToRadialCoords(i.texcoord);
-            if (tc.x > i.image180ScaleAndCutoff[1])
+            if (tc.x > i.image180ScaleAndCutoff[1]) /// Error
                 return half4(0,0,0,1);
             tc.x = fmod(tc.x*i.image180ScaleAndCutoff[0], 1);
             tc = (tc + i.layout3DScaleAndOffset.xy) * i.layout3DScaleAndOffset.zw;

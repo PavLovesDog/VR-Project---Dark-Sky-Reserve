@@ -65,7 +65,7 @@ public class RMIDSRVisualsManager : MonoBehaviour
                 AudioSource audio = obj.GetComponent<AudioSource>();
                 if (audio != null)
                 {
-                    audio.volume = 1.0f;
+                    audio.volume = 0.75f;
                     audio.pitch = Random.Range(0.4f, 0.9f);
                     audio.PlayOneShot(audio.clip); //play clip thats loaded into it one shot
                 }

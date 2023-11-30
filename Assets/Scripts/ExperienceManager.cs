@@ -154,6 +154,7 @@ public class ExperienceManager : MonoBehaviour
                 currentNarrationIndex = 5; // set index directly
                 inRmidsrScene = true;
                 inStreetScene = false;
+                StartCoroutine(FadeIn());
                 StartCoroutine(PlayRMIDSRNarrationSequence());
                 break;
 
@@ -443,9 +444,11 @@ public class ExperienceManager : MonoBehaviour
         // wait for 10 seconds so people can read first screen
         yield return new WaitForSeconds(8);
 
+
         //engage the following screens
         CreditsSceneManager.Instance.ShowCreditsWrapper();
 
+        ResetExperience(); // trip bools for next experience
     }
 
     #endregion
