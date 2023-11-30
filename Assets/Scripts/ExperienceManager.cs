@@ -64,25 +64,25 @@ public class ExperienceManager : MonoBehaviour
 
     #region DEBUGGING
     //DEBUGGING ======================================================================= DEBUG
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            skipClip();
-    }
-
-    private void skipClip()
-    {
-        //increment index
-        currentNarrationIndex++;
-
-        //stop audio and play next track
-        AudioManager.Instance.narrationSource.Stop();
-        AudioManager.Instance.PlayNarration(currentNarrationIndex);
-
-        //increment int that controls street scene
-        if (uniqueDeactivatedLeversCount <= 4)
-            uniqueDeactivatedLeversCount++;
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //        skipClip();
+    //}
+    //
+    //private void skipClip()
+    //{
+    //    //increment index
+    //    currentNarrationIndex++;
+    //
+    //    //stop audio and play next track
+    //    AudioManager.Instance.narrationSource.Stop();
+    //    AudioManager.Instance.PlayNarration(currentNarrationIndex);
+    //
+    //    //increment int that controls street scene
+    //    if (uniqueDeactivatedLeversCount <= 4)
+    //        uniqueDeactivatedLeversCount++;
+    //}
     //DEBUGGING ======================================================================= DEBUG
     #endregion
 
@@ -337,7 +337,7 @@ public class ExperienceManager : MonoBehaviour
         }
         currentNarrationIndex++; // incremennt index -------------------------------------------------------------------------INDEX INCREMENT
 
-        yield return new WaitForSeconds(6.0f); // DEBUG NOTE; ALLOW TIME FOR TRANSITION
+        yield return new WaitForSeconds(2.0f); // DEBUG NOTE; ALLOW TIME FOR TRANSITION
 
         ChangeScene(sceneNames[2]);
     }

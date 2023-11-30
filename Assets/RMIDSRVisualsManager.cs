@@ -61,7 +61,15 @@ public class RMIDSRVisualsManager : MonoBehaviour
             // display each object in order
             foreach (GameObject obj in section.objectsToShow)
             {
-                //play a sound?
+                //Find its audio source
+                AudioSource audio = obj.GetComponent<AudioSource>();
+                if (audio != null)
+                {
+                    audio.volume = 1.0f;
+                    audio.pitch = Random.Range(0.4f, 0.9f);
+                    audio.PlayOneShot(audio.clip); //play clip thats loaded into it one shot
+                }
+
                 SetSpriteRenderersEnabled(obj, true);
                 yield return new WaitForSeconds(section.delayBetweenObjects);
             }
@@ -83,6 +91,7 @@ public class RMIDSRVisualsManager : MonoBehaviour
     {
         foreach (SpriteRenderer renderer in obj.GetComponentsInChildren<SpriteRenderer>())
         {
+            //enable their sprite
             renderer.enabled = enabled;
         }
     }
