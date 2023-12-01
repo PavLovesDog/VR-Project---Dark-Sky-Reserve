@@ -114,8 +114,8 @@ public class LightPollutionManager : MonoBehaviour
         //turn off lights for the specified socket
         lightManagers[socketID].TurnOffLights();
 
-        ////play audio
-        //AudioManager.Instance.PlaySFX(1, 0.65f, Random.Range(0.6f, 0.9f));
+        //Rewduce sizze of background glow
+        GlowScaleAdjust.Instance.StartLerpToNextScale();
 
         // Trigger the state change event with the socket ID and the state (not occupied)
         OnSocketStateChange?.Invoke(socketID, false);
