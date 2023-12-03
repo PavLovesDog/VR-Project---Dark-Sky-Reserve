@@ -14,10 +14,16 @@ public class GazeInteraction : MonoBehaviour
 
     private float gazeTimer = 0f;
     private bool isGazing = false;
+    private bool buttonActivated = false;
 
     // Define UnityEvents that can be assigned from the Inspector
     public UnityEvent onBeginButtonGazeComplete;
     public UnityEvent onContinueButtonGazeComplete;
+
+    private void Start()
+    {
+        buttonActivated = false;
+    }
 
     private void Update()
     {
@@ -46,7 +52,8 @@ public class GazeInteraction : MonoBehaviour
                 {
                     isGazing = true;
                     gazeTimer = 0f;
-                    loadingImage.fillAmount = 0f;
+                    if(!buttonActivated) // if the button hasnt activated and the player looks away
+                        loadingImage.fillAmount = 0f; // reset fill
                 }
 
                 gazeTimer += Time.deltaTime;
@@ -54,6 +61,8 @@ public class GazeInteraction : MonoBehaviour
 
                 if (gazeTimer >= gazeTime)
                 {
+                    buttonActivated = true; // player has activated button, keepo fill amount
+                    loadingImage.fillAmount = 1f;
                     gazeEvent.Invoke(); // Invoke the event
                     //isGazing = false; // Reset gaze
                 }
