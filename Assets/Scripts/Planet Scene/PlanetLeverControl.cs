@@ -18,6 +18,34 @@ public class PlanetLeverControl : MonoBehaviour
     public MeshRenderer cityLights;
     public ChangeMaterial lightBulb;
 
+    [Header("Audio")]
+    public AudioSource source;
+    public AudioSource source2;
+    public AudioClip fadeIn;
+    public AudioClip toneLoop;
+    public AudioClip fadeOut;
+
+    private void OnEnable()
+    {
+        StartCoroutine(PlayLeverTones());
+
+    }
+
+    private IEnumerator PlayLeverTones()
+    {
+        source.PlayOneShot(fadeIn);
+        //yield return new WaitWhile(() => source.isPlaying); // wait for clip to end
+        yield return new WaitForSeconds(5.1f);
+        source2.Play();
+
+        yield return new WaitWhile(() => isOn);
+        source2.Stop();
+        //source.loop = false;
+        //source.volume = 45f;
+        //source.clip = fadeOut;
+        source.PlayOneShot(fadeOut);
+    }
+
     private void Awake()
     {
         if (Instance == null)

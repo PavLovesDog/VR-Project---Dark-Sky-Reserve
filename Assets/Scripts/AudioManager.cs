@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            gameObject.tag = "PersistentObject"; // tag for easy deletion in end
             DontDestroyOnLoad(gameObject); // Keep the AudioManager across scenes
         }
         else

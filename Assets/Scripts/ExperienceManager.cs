@@ -62,35 +62,12 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField]
     private bool inCreditsScene;
 
-    #region DEBUGGING
-    //DEBUGGING ======================================================================= DEBUG
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //        skipClip();
-    //}
-    //
-    //private void skipClip()
-    //{
-    //    //increment index
-    //    currentNarrationIndex++;
-    //
-    //    //stop audio and play next track
-    //    AudioManager.Instance.narrationSource.Stop();
-    //    AudioManager.Instance.PlayNarration(currentNarrationIndex);
-    //
-    //    //increment int that controls street scene
-    //    if (uniqueDeactivatedLeversCount <= 4)
-    //        uniqueDeactivatedLeversCount++;
-    //}
-    //DEBUGGING ======================================================================= DEBUG
-    #endregion
-
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            gameObject.tag = "PersistentObject"; // tag for easy deletion in end
             DontDestroyOnLoad(gameObject); // Keep the ExperienceManager across scenes
         }
         else
@@ -182,6 +159,8 @@ public class ExperienceManager : MonoBehaviour
         beginNarration = true;
         // Reset other flags HERE as needed
         canInteractLever = false;
+
+        uniqueDeactivatedLeversCount = 0; // reset lever counter
     }
     #region Street Scene Logic
     // Street Scene logic
@@ -328,7 +307,7 @@ public class ExperienceManager : MonoBehaviour
         Debug.Log("All sockets are empty. lets move on");
 
         //wait for prevoius clip to end
-        yield return new WaitForSeconds(narrationDelay); //Match wait with marrative delay
+        yield return new WaitForSeconds(narrationDelay + 1f); //Match wait with marrative delay
         //Activate transition
 
         // Wait for the clip to finish playing before continuing
@@ -338,7 +317,9 @@ public class ExperienceManager : MonoBehaviour
         }
         currentNarrationIndex++; // incremennt index -------------------------------------------------------------------------INDEX INCREMENT
 
-        yield return new WaitForSeconds(2.0f); // DEBUG NOTE; ALLOW TIME FOR TRANSITION
+        StartCoroutine(FadeOut());
+
+        yield return new WaitForSeconds(4.5f); 
 
         ChangeScene(sceneNames[2]);
     }

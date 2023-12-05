@@ -6,6 +6,7 @@ public class PersistGameObject : MonoBehaviour
 {
     void Awake()
     {
+        gameObject.tag = "PersistentObject"; // tag for easy deletion in end
         DontDestroyOnLoad(gameObject);
     }
 }

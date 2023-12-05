@@ -50,6 +50,16 @@ public class PlanetScenePositionManager : MonoBehaviour
 
     private int currentPositionIndex = 0; // Tracks the current position index
 
+    [Header("RMIDSR Outline")]
+    //public SpriteRenderer outline;
+    [SerializeField] private GameObject outlineObject; // Assign this in the inspector
+    [SerializeField] private float timeAtStart = 3f;
+    [SerializeField] private float fadeInDuration = 2f;
+    [SerializeField] private float displayDuration = 5f;
+    [SerializeField] private float fadeOutDuration = 2f;
+    [SerializeField] private float pulsateScale = 0.1f; // Amount by which the scale will change
+    [SerializeField] private float pulsateDuration = 1f; // Duration of one pulsate cycle
+
     void Start()
     {
         StartCoroutine(PositionSequence());
@@ -57,6 +67,56 @@ public class PlanetScenePositionManager : MonoBehaviour
         lightPollution.SetActive(false);
         endCanvas.enabled = false;
         speedUpNight = false;
+
+        //Coroutine to display the RMIDSR sprite
+        StartCoroutine(ShowRMIDSROutline());
+    }
+
+    private IEnumerator ShowRMIDSROutline()
+    {
+        // Start the pulsating effect in a separate coroutine
+        StartCoroutine(PulsateOutline(outlineObject, 20f, 0.16f, pulsateScale, pulsateDuration));
+
+        yield return new WaitForSeconds(timeAtStart);
+
+        // Fade in the outline object
+        StartCoroutine(FadeSprite(outlineObject, true, fadeInDuration));
+
+        // Wait for the display duration plus fade out duration before ending the coroutine
+        yield return new WaitForSeconds(displayDuration + fadeOutDuration);
+
+        // Fade out the outline sprite renderer
+        StartCoroutine(FadeSprite(outlineObject, false, fadeOutDuration));
+    }
+    private IEnumerator PulsateOutline(GameObject obj, float totalDuration, float baseScale, float pulsateAmount, float pulsateDuration)
+    {
+        float startTime = Time.time;
+        while (Time.time - startTime < totalDuration)
+        {
+            float pulsateLerp = Mathf.PingPong(Time.time - startTime, pulsateDuration) / pulsateDuration;
+            float scale = baseScale + pulsateAmount * pulsateLerp;
+            obj.transform.localScale = new Vector3(scale, scale, scale);
+            yield return null;
+        }
+
+        // Optionally restore the original scale after pulsating
+        obj.transform.localScale = new Vector3(baseScale, baseScale, baseScale);
+    }
+
+    private IEnumerator FadeSprite(GameObject obj, bool fadeIn, float duration)
+    {
+        SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+        float startAlpha = fadeIn ? 0f : 1f;
+        float endAlpha = fadeIn ? 1f : 0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
+            renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, newAlpha);
+            yield return null;
+        }
     }
 
     private IEnumerator PositionSequence()

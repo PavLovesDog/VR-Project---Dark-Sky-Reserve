@@ -89,9 +89,16 @@ public class CreditsSceneManager : MonoBehaviour
 
     private IEnumerator ResetExperience()
     {
-        yield return StartCoroutine(Fade(1));
+        yield return StartCoroutine(Fade(1)); // fade out
 
-        //Load the experience
+        //destroy persistent objects
+        GameObject[] persistentObjects = GameObject.FindGameObjectsWithTag("PersistentObject");
+        foreach (GameObject obj in persistentObjects)
+        {
+            Destroy(obj);
+        }
+
+        //ReLoad the experience back to main menu
         SceneManager.LoadScene(mainMenuSceneName);
     }
 

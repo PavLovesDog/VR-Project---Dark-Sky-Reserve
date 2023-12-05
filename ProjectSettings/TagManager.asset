@@ -17,6 +17,7 @@ TagManager:
   - Lever2Canvas
   - Lever3Canvas
   - Lever4Canvas
+  - PersistentObject
   layers:
   - Default
   - TransparentFX
