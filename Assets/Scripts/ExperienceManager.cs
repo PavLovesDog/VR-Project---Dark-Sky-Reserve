@@ -159,7 +159,7 @@ public class ExperienceManager : MonoBehaviour
                 break;
 
             case "3 - Planet Scene":
-                currentNarrationIndex = 10; // set index directly
+                currentNarrationIndex = 12; // set index directly
                 //FadeIn handled in position manager
                 //StartCoroutine(FadeIn()); // THIS MIGHT BREAK!? may need to re-find the fade canvas?
                 inPlanetScene = true;
@@ -353,7 +353,7 @@ public class ExperienceManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         // Start playing from the current index (which should be set to 5 when this scene starts)
-        while (currentNarrationIndex <= 9)
+        while (currentNarrationIndex <= 11)
         {
             // Only enqueue the clip if the narration is not playing
             if (!AudioManager.Instance.IsNarrationPlaying())
@@ -361,11 +361,27 @@ public class ExperienceManager : MonoBehaviour
                 AudioManager.Instance.PlayNarration(currentNarrationIndex);
             }
 
-            if(currentNarrationIndex == 8)
+            if(currentNarrationIndex == 7) // PLANTS talk starts at narration index 7 
             {
-                //Start visual manager tthings
-                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence());
+                //Start visual manager to show PLANT Light Drawings
+                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[0]));
             }
+            else if (currentNarrationIndex == 8) // POLLINATORS
+            {
+                // show POLLINATOR light drawings
+                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[1]));
+            }
+            else if (currentNarrationIndex == 10) // FAUNA
+            {
+                // show FAUNA light drawings
+                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[2]));
+            }
+            else if (currentNarrationIndex == 11) // HUMANS
+            {
+                // show HUMANS light drawings
+                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[3]));
+            }
+
             yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
             currentNarrationIndex++; // incremennt index -------------------------------------------------------------------------INDEX INCREMENT
 
@@ -398,13 +414,19 @@ public class ExperienceManager : MonoBehaviour
     #region Planet Scene Logic
     // Planet Scene logic
     // --------------------------------------------------------------------------------------- PLANET SCENE
-    private IEnumerator PlayPlanetSceneNarrationSequence()
+    private IEnumerator PlayPlanetSceneNarrationSequence() // Narration Index now goes from 12-14
     {
         yield return new WaitForSeconds(2.0f);
         //play the first narration clip
         AudioManager.Instance.PlayNarration(currentNarrationIndex);
         yield return new WaitWhile(() => AudioManager.Instance.narrationSource.isPlaying); // wait for it to complete
         currentNarrationIndex++; // increment the narration index.
+
+        //PLAY NEXT NARRATIUIVE LINE
+        AudioManager.Instance.PlayNarration(currentNarrationIndex);
+        yield return new WaitWhile(() => AudioManager.Instance.narrationSource.isPlaying); // wait for it to complete
+        currentNarrationIndex++;
+
         //wait for bool to trigger from the lever control script
         yield return new WaitWhile(() => PlanetLeverControl.Instance.isOn);
         //once bool is tripped (this will be the turning off of the lights. i.e. level pulled down)

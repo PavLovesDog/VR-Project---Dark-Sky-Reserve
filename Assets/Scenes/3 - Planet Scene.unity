@@ -652,7 +652,7 @@ MonoBehaviour:
   fadeOverlay: {fileID: 1031846126}
   endCanvas: {fileID: 1999137146}
   fadeDuration: 3
-  waitTimeAtStart: 5
+  waitTimeAtStart: 10
   waitTimeBeforeTeleport: 1
   waitTimeAtFinal: 1
   moveSpeed: 2.5
@@ -740,6 +740,7 @@ MonoBehaviour:
   xOffset: 0
   zOffset: 0
   lockYAxis: 0
+  reverseDirection: 0
 --- !u!212 &349240888
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1250,6 +1251,7 @@ MonoBehaviour:
   currentSpeed: 0
   lerpSpeed: 0
   rotationThreshold: 0.1
+  sunMovementTimer: 0
   rotate: 1
   isLight: 0
   isClouds: 1
@@ -2195,6 +2197,7 @@ MonoBehaviour:
   xOffset: 0
   zOffset: 0
   lockYAxis: 0
+  reverseDirection: 0
 --- !u!212 &1034097651
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2488,6 +2491,70 @@ PrefabInstance:
       propertyPath: narrationSource
       value: 
       objectReference: {fileID: 530652599}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: abb8181f0db937646939c2a7963f7ca1, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 481c65f3b4de1a44ea3de21cd591a5b6, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ff1e4382da2392d498d86dccca26b4cc, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0db0d7ef9e544bf4fa47fa8ef3b8ce3b, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2ba682d433771c445953779c7bf42df8, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 386b754937853194f9d5ac23bc587222, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dacddeecdfdbd4997c9da8b988562c, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: 79f477f1952566242a1f960d8e27ecba, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[8]
+      value: 
+      objectReference: {fileID: 8300000, guid: 024cb5ec8f334bd4f9eb1e40dafa6e78, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[9]
+      value: 
+      objectReference: {fileID: 8300000, guid: 655b86359153e6d4e94c86bb02800a0f, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[10]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ba41a7f003cda241a12c1c53537ccef, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[11]
+      value: 
+      objectReference: {fileID: 8300000, guid: b445b5b06e483ba45864c931e9aaac0f, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[12]
+      value: 
+      objectReference: {fileID: 8300000, guid: b7a93b9ae3986da4a911e1ec82a2a88c, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[13]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1eb2af73a8ba3d545813cce5538c87f2, type: 3}
+    - target: {fileID: 8074067602543626, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
+      propertyPath: narrationClips.Array.data[14]
+      value: 
+      objectReference: {fileID: 8300000, guid: 026f108778cd72f42a145897ab59d7e4, type: 3}
     - target: {fileID: 8074067602543627, guid: a821671c05ad7344581654c5d3d8e2ba, type: 3}
       propertyPath: m_Name
       value: Audio Manager
@@ -2898,6 +2965,7 @@ MonoBehaviour:
   currentSpeed: 0
   lerpSpeed: 0
   rotationThreshold: 0.1
+  sunMovementTimer: 0
   rotate: 1
   isLight: 1
   isClouds: 0
@@ -3069,7 +3137,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
@@ -4564,6 +4632,7 @@ MonoBehaviour:
   currentSpeed: 0
   lerpSpeed: 0
   rotationThreshold: 0.1
+  sunMovementTimer: 0
   rotate: 1
   isLight: 0
   isClouds: 1
@@ -4574,14 +4643,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522754682823178441}
-  m_LocalRotation: {x: 0.2682961, y: 0.5984252, z: -0.6525642, w: 0.3795583}
+  m_LocalRotation: {x: 0.3156603, y: 0.5748853, z: -0.68215185, w: 0.3233178}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 99.99999, z: 100.00003}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 543450652746105311}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 79.961, y: 36.674, z: -88.569}
+  m_LocalEulerAnglesHint: {x: 81.278, y: -22.862, z: -148.972}
 --- !u!114 &8776096138111508875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4594,15 +4663,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6222a08ac6c3b6846846be5760e35ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotation: {x: 0.19271855, y: -0.009520199, z: 0.8669013, w: -0.45962074}
-  endRotation: {x: 0.49713135, y: -0.77797556, z: 0.3825767, w: -0.035347745}
+  startRotation: {x: -0.19309983, y: 0.0020577237, z: -0.86726016, w: 0.45887688}
+  endRotation: {x: -0.19340171, y: 0.8383577, z: 0.30324215, w: 0.40962958}
   currentRotation: {x: 0, y: 0, z: 0, w: 1}
   cloudSpeed: 0
   daylightSpeed: 2
   daylightFastSpeed: 8
   currentSpeed: 2
   lerpSpeed: 0.25
-  rotationThreshold: 0.1
+  rotationThreshold: 10
+  sunMovementTimer: 39
   rotate: 1
   isLight: 1
   isClouds: 0

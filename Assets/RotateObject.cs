@@ -20,6 +20,9 @@ public class RotateObject : MonoBehaviour
     private float lerpProgress = 0.0f;
     public float rotationThreshold = 0.1f; // Threshold in degrees
 
+    [Header("Light Movement Varibales")]
+    public float sunMovementTimer;
+
     [Header("Object Types")]
     public bool rotate;
     public bool isLight;
@@ -35,8 +38,11 @@ public class RotateObject : MonoBehaviour
 
     void Update()
     {
-        //track rotation
-        currentRotation = gameObject.transform.rotation;
+        //countdown from
+        sunMovementTimer -= Time.deltaTime;
+
+        //track rotation 
+        currentRotation = gameObject.transform.localRotation;
 
         if (rotate)
         {
@@ -44,12 +50,23 @@ public class RotateObject : MonoBehaviour
                 transform.Rotate(0, 0, cloudSpeed * Time.deltaTime);
             else // is light object
             {
-                // Check the angle difference between the current rotation and the end rotation
-                if (Quaternion.Angle(transform.rotation, endRotation) < rotationThreshold)
-                    // If the angle is less than the threshold, consider the rotation complete
-                    return; // don't rotate anymore
+                //// Check if the rotation is close enough to the target
+                //if (Quaternion.Angle(transform.rotation, endRotation) < rotationThreshold)
+                //{
+                //    rotate = false;
+                //    //transform.rotation = endRotation;
+                //    return;
+                //}
 
-                if(positionManager.speedUpNight) // user view is far back, we want night changing faster
+                if(sunMovementTimer <= 0)
+                {
+                    sunMovementTimer = 0;
+                    rotate = false;
+                    //transform.rotation = endRotation;
+                    return;
+                }
+
+                if (positionManager.speedUpNight) // user view is far back, we want night changing faster
                 {
                     // Update the lerp progress towards the fast speed
                     lerpProgress += lerpSpeed * Time.deltaTime;
