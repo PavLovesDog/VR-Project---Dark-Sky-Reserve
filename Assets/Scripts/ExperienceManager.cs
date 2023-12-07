@@ -440,8 +440,8 @@ public class ExperienceManager : MonoBehaviour
     // --------------------------------------------------------------------------------------- CREDITS SCENE
     private IEnumerator StartCreditSceneLogic()
     {
-        // wait for 10 seconds so people can read first screen
-        yield return new WaitForSeconds(8);
+        //// wait for 10 seconds so people can read first screen
+        yield return new WaitForEndOfFrame();
 
 
         //engage the following screens

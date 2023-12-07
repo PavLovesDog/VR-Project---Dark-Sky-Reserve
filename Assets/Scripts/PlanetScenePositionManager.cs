@@ -72,8 +72,17 @@ public class PlanetScenePositionManager : MonoBehaviour
         StartCoroutine(ShowRMIDSROutline());
     }
 
+    #region RMIDSR Outline Specific
     private IEnumerator ShowRMIDSROutline()
     {
+        //get objects audiosourcce
+        AudioSource audioSource = outlineObject.GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource component not found on the outlineObject.");
+            yield break;
+        }
+
         // Start the pulsating effect in a separate coroutine
         StartCoroutine(PulsateOutline(outlineObject, 20f, 0.16f, pulsateScale, pulsateDuration));
 
@@ -82,11 +91,31 @@ public class PlanetScenePositionManager : MonoBehaviour
         // Fade in the outline object
         StartCoroutine(FadeSprite(outlineObject, true, fadeInDuration));
 
+        //Increse volume of audio source of outlineObject (from 0 to .65), over 2 seconds
+        StartCoroutine(FadeAudioVolume(audioSource, 0f, 0.45f, 2f));
+
         // Wait for the display duration plus fade out duration before ending the coroutine
         yield return new WaitForSeconds(displayDuration + fadeOutDuration);
 
         // Fade out the outline sprite renderer
         StartCoroutine(FadeSprite(outlineObject, false, fadeOutDuration));
+
+        //decrease volume of audio source of outlineObject (from .65 to 0), over 2 seconds
+        StartCoroutine(FadeAudioVolume(audioSource, 0.45f, 0f, 4f));
+    }
+    private IEnumerator FadeAudioVolume(AudioSource audioSource, float startVolume, float endVolume, float duration)
+    {
+        float currentTime = 0;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            float newVolume = Mathf.Lerp(startVolume, endVolume, currentTime / duration);
+            audioSource.volume = newVolume;
+            yield return null;
+        }
+
+        audioSource.volume = endVolume; // Ensure final volume is set
     }
     private IEnumerator PulsateOutline(GameObject obj, float totalDuration, float baseScale, float pulsateAmount, float pulsateDuration)
     {
@@ -118,6 +147,7 @@ public class PlanetScenePositionManager : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
     private IEnumerator PositionSequence()
     {
