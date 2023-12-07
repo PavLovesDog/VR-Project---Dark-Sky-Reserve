@@ -92,13 +92,9 @@ public class LightPollutionManager : MonoBehaviour
     {
         //update skybox material
         currentSocketsOccupiedCount = CountOccupiedSockets();
-        //UpdateSkyboxBlend(currentSocketsOccupiedCount);
 
         //turn on lights for the specified socket
         lightManagers[socketID].TurnOnLights();
-
-        ////play audio
-        //AudioManager.Instance.PlaySFX(0, 0.65f, Random.Range(0.6f,0.9f));
 
         // Trigger the state change event with the socket ID and the state (occupied)
         OnSocketStateChange?.Invoke(socketID, true);

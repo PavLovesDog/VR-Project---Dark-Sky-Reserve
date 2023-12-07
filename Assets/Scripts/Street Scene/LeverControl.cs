@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LeverControl : MonoBehaviour
 {
+    public int ID;
+
     //rotation angles for on and off positions
     public Vector3 onRotation = new Vector3(-48.5f, 0f, 0f);
     public Vector3 offRotation = new Vector3(-110f, 0f, 0f);
@@ -16,34 +18,35 @@ public class LeverControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (ExperienceManager.Instance.canInteractLever && isOn) // ONLY interactable if they are ON -----------------------------------  <-------TEST THIS
+        if (ExperienceManager.Instance.canInteractLever && isOn
+            && ExperienceManager.Instance.currentNarrationIndex -1 == ID) // ONLY interactable if they are ON -----------------------------------  <-------TEST THIS
         {
             if (other.gameObject.CompareTag("Hand") && Time.time - lastActivationTime >= activationCooldown)
             {
                 Debug.Log("Lever TOUCHED Hand");
-
+    
                 // If a rotation coroutine is running, stop it
                 if (rotationCoroutine != null)
                 {
                     StopCoroutine(rotationCoroutine);
                     AudioManager.Instance.StopSFX();
                 }
-
+    
                 // Determine the new target rotation based on the current state
                 Vector3 targetRotation = isOn ? offRotation : onRotation;
-
+    
                 // Start the new rotation coroutine and store its reference
                 rotationCoroutine = StartCoroutine(RotateLever(targetRotation));
-
+    
                 //play audio dependent on state
                 if (isOn)
                     AudioManager.Instance.PlaySFX(1, 0.35f, Random.Range(0.5f, 1.0f)); // power down
                 else // is off
                     AudioManager.Instance.PlaySFX(0, 0.65f, Random.Range(0.5f, 1.0f)); // power up sound
-
+    
                 // Toggle the state of the lever
                 isOn = !isOn;
-
+    
                 // Update last activation time
                 lastActivationTime = Time.time;
             }
@@ -54,8 +57,12 @@ public class LeverControl : MonoBehaviour
         }
     }
 
-    private IEnumerator RotateLever(Vector3 targetEulerAngles)
+    public IEnumerator RotateLever(Vector3 targetEulerAngles)
     {
+        //play audio dependent on state
+        if (isOn)
+            AudioManager.Instance.PlaySFX(1, 0.35f, Random.Range(0.5f, 1.0f)); // power down
+
         // Calculate the target rotation as a Quaternion
         Quaternion targetRotation = Quaternion.Euler(targetEulerAngles);
 

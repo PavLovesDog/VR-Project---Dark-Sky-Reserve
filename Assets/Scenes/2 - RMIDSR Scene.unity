@@ -3319,17 +3319,17 @@ PrefabInstance:
     - target: {fileID: 49635718666765859, guid: d025d16879fccf14391b4f955ed5132d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.93
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 49635718666765859, guid: d025d16879fccf14391b4f955ed5132d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.37
+      value: -1.36
       objectReference: {fileID: 0}
     - target: {fileID: 49635718666765859, guid: d025d16879fccf14391b4f955ed5132d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.7
+      value: 9.1
       objectReference: {fileID: 0}
     - target: {fileID: 49635718666765859, guid: d025d16879fccf14391b4f955ed5132d,
         type: 3}
@@ -3974,17 +3974,17 @@ PrefabInstance:
     - target: {fileID: 3088777727410152205, guid: a9a5ea378bff19646a7ccb09d55ee3f9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.41
+      value: 5.28
       objectReference: {fileID: 0}
     - target: {fileID: 3088777727410152205, guid: a9a5ea378bff19646a7ccb09d55ee3f9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.53
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 3088777727410152205, guid: a9a5ea378bff19646a7ccb09d55ee3f9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.34
+      value: 12.74
       objectReference: {fileID: 0}
     - target: {fileID: 3088777727410152205, guid: a9a5ea378bff19646a7ccb09d55ee3f9,
         type: 3}
@@ -5598,6 +5598,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2515888355964892887, guid: b7380becc54eb134bbb4dc425f90a067,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2515888355964892887, guid: b7380becc54eb134bbb4dc425f90a067,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 2515888355964892887, guid: b7380becc54eb134bbb4dc425f90a067,
         type: 3}

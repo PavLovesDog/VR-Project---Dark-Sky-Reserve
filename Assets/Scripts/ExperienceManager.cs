@@ -41,8 +41,6 @@ public class ExperienceManager : MonoBehaviour
     private GrowShrink[] bloom;
 
     [Header("Scene Management")]
-    //[SerializeField]
-    //private Preset ExperienceManagerSettings;
     [SerializeField]
     private string[] sceneNames; // Assign this array in the Inspector
     [SerializeField]
@@ -266,8 +264,8 @@ public class ExperienceManager : MonoBehaviour
         // Only act on sockets being vacated (turned off)
         if (!isOccupied && !AudioManager.Instance.IsNarrationPlaying() && !pauseLeverCount)
         {
-            // Check if the socket has not been deactivated before
-            if (!lightPollutionManager.HasSocketBeenDeactivatedBefore(socketIndex))
+            // Check if the socket has not been deactivated before                    // Ensure Only the lever representing the narration is selected
+            if (!lightPollutionManager.HasSocketBeenDeactivatedBefore(socketIndex)/* && socketIndex == currentNarrationIndex - 1*/)
             {
                 // Mark the socket as deactivated
                 lightPollutionManager.MarkSocketAsDeactivated(socketIndex);
@@ -298,8 +296,6 @@ public class ExperienceManager : MonoBehaviour
             StartCoroutine(EndOfStreetScene());
         }
     }
-
-    //TODO CREATE LOGIC TO INITIATE A TRANSITION!
 
     //Coroutine to call to initiate change
     private IEnumerator EndOfStreetScene()
