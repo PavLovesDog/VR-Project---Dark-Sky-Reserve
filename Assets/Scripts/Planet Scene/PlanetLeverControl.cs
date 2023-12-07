@@ -35,15 +35,27 @@ public class PlanetLeverControl : MonoBehaviour
     {
         source.PlayOneShot(fadeIn);
         //yield return new WaitWhile(() => source.isPlaying); // wait for clip to end
-        yield return new WaitForSeconds(5.1f);
-        source2.Play();
-
+        yield return new WaitForSeconds(4.8f);
+        //source2.Play();
+        StartCoroutine(FadeAudioVolume(source2, 0f, 0.35f, 0.4f));
         yield return new WaitWhile(() => isOn);
         source2.Stop();
-        //source.loop = false;
-        //source.volume = 45f;
-        //source.clip = fadeOut;
         source.PlayOneShot(fadeOut);
+    }
+
+    private IEnumerator FadeAudioVolume(AudioSource audioSource, float startVolume, float endVolume, float duration)
+    {
+        float currentTime = 0;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            float newVolume = Mathf.Lerp(startVolume, endVolume, currentTime / duration);
+            audioSource.volume = newVolume;
+            yield return null;
+        }
+
+        audioSource.volume = endVolume; // Ensure final volume is set
     }
 
     private void Awake()
