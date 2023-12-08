@@ -59,6 +59,7 @@ public class PlanetScenePositionManager : MonoBehaviour
     [SerializeField] private float fadeOutDuration = 2f;
     [SerializeField] private float pulsateScale = 0.1f; // Amount by which the scale will change
     [SerializeField] private float pulsateDuration = 1f; // Duration of one pulsate cycle
+    [SerializeField] private float toneVolume = 0.65f;
 
     void Start()
     {
@@ -92,7 +93,7 @@ public class PlanetScenePositionManager : MonoBehaviour
         StartCoroutine(FadeSprite(outlineObject, true, fadeInDuration));
 
         //Increse volume of audio source of outlineObject (from 0 to .65), over 2 seconds
-        StartCoroutine(FadeAudioVolume(audioSource, 0f, 0.45f, 2f));
+        StartCoroutine(FadeAudioVolume(audioSource, 0f, toneVolume, 2f));
 
         // Wait for the display duration plus fade out duration before ending the coroutine
         yield return new WaitForSeconds(displayDuration + fadeOutDuration);
@@ -101,7 +102,7 @@ public class PlanetScenePositionManager : MonoBehaviour
         StartCoroutine(FadeSprite(outlineObject, false, fadeOutDuration));
 
         //decrease volume of audio source of outlineObject (from .65 to 0), over 2 seconds
-        StartCoroutine(FadeAudioVolume(audioSource, 0.45f, 0f, 4f));
+        StartCoroutine(FadeAudioVolume(audioSource, toneVolume, 0f, 4f));
     }
     private IEnumerator FadeAudioVolume(AudioSource audioSource, float startVolume, float endVolume, float duration)
     {

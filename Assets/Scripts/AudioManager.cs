@@ -33,6 +33,10 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        //Find audio components
+        narrationSource = GameObject.FindGameObjectWithTag("NarrationSource").GetComponent<AudioSource>();
+        sfxSource = GameObject.FindGameObjectWithTag("SFXSource").GetComponent<AudioSource>();
     }
 
     // Used to play a specific narration clip.

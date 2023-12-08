@@ -143,6 +143,8 @@ public class CreditsSceneManager : MonoBehaviour
             Destroy(obj);
         }
 
+        yield return new WaitForSeconds(2); // just wait...
+
         //ReLoad the experience back to main menu
         SceneManager.LoadScene(mainMenuSceneName);
     }

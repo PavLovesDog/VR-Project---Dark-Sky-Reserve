@@ -667,6 +667,7 @@ MonoBehaviour:
   fadeOutDuration: 2
   pulsateScale: 0.05
   pulsateDuration: 2
+  toneVolume: 0.85
 --- !u!4 &295829946
 Transform:
   m_ObjectHideFlags: 0

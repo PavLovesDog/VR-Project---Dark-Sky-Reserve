@@ -69,7 +69,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Skybox3:
-        m_Texture: {fileID: 8900000, guid: d156f0520e79dac408b0e23f17353aa3, type: 3}
+        m_Texture: {fileID: 8900000, guid: b290ad3528f6cb746a97cfa216c17e32, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Skybox4:
@@ -96,7 +96,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
-    - _BlendValue: 2.4
+    - _BlendValue: 0.07
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0

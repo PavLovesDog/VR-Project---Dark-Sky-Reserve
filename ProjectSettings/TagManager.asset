@@ -18,6 +18,8 @@ TagManager:
   - Lever3Canvas
   - Lever4Canvas
   - PersistentObject
+  - NarrationSource
+  - SFXSource
   layers:
   - Default
   - TransparentFX
