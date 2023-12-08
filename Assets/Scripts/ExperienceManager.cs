@@ -62,6 +62,7 @@ public class ExperienceManager : MonoBehaviour
 
     [Header("Reset Management")]
     public Coroutine RMIDSRNarrationCoroutine;
+    public Coroutine RMIDSRVisualsCoroutine;
 
     private void Awake()
     {
@@ -344,22 +345,22 @@ public class ExperienceManager : MonoBehaviour
             if(currentNarrationIndex == 7) // PLANTS talk starts at narration index 7 
             {
                 //Start visual manager to show PLANT Light Drawings
-                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[0]));
+                RMIDSRVisualsCoroutine = StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[0]));
             }
             else if (currentNarrationIndex == 8) // POLLINATORS
             {
                 // show POLLINATOR light drawings
-                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[1]));
+                RMIDSRVisualsCoroutine = StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[1]));
             }
             else if (currentNarrationIndex == 10) // FAUNA
             {
                 // show FAUNA light drawings
-                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[2]));
+                RMIDSRVisualsCoroutine = StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[2]));
             }
             else if (currentNarrationIndex == 11) // HUMANS
             {
                 // show HUMANS light drawings
-                StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[3]));
+                RMIDSRVisualsCoroutine = StartCoroutine(RMIDSRVisualsManager.Instance.VisualsSequence(RMIDSRVisualsManager.Instance.sections[3]));
             }
 
             yield return new WaitWhile(() => AudioManager.Instance.IsNarrationPlaying());
@@ -513,7 +514,8 @@ public class ExperienceManager : MonoBehaviour
         //Stop scene specific Coroutines
         if(inRmidsrScene)
         {
-            StopCoroutine(RMIDSRNarrationCoroutine);
+            StopCoroutine(RMIDSRNarrationCoroutine); // stop narration loop
+            StopCoroutine(RMIDSRVisualsCoroutine); // stop visual loop
         }
 
         // Clear the HashSet before destroying persistent objects

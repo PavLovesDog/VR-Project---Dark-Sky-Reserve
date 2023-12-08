@@ -68,14 +68,14 @@ public class GazeInteraction : MonoBehaviour
 
                 if (gazeTimer >= gazeTime)
                 {
-                    buttonActivated = true; // player has activated button, keepo fill amount
+                    StartCoroutine(KeepImageFill()); // player has activated button, keepo fill amount
                     loadingImage.fillAmount = 1f;
                     gazeEvent.Invoke(); // Invoke the event
                     //isGazing = false; // Reset gaze
                 }
             }
         }
-        else if (isGazing)
+        else if (isGazing & !buttonActivated)
         {
             isGazing = false;
             if(beginLoadingImage != null)
@@ -85,6 +85,13 @@ public class GazeInteraction : MonoBehaviour
             if (resetLoadingImage != null)
                 resetLoadingImage.fillAmount = 0f;
         }
+    }
+
+    IEnumerator KeepImageFill()
+    {
+        buttonActivated = true;
+        yield return new WaitForSeconds(gazeTime + 2);
+        buttonActivated = false;
     }
 
     // Draw Gizmos in the Editor to visualize the gaze direction
