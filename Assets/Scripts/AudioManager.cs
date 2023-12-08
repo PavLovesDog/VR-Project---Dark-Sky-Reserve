@@ -35,8 +35,10 @@ public class AudioManager : MonoBehaviour
         }
 
         //Find audio components
-        narrationSource = GameObject.FindGameObjectWithTag("NarrationSource").GetComponent<AudioSource>();
-        sfxSource = GameObject.FindGameObjectWithTag("SFXSource").GetComponent<AudioSource>();
+        if(narrationClips == null)
+            narrationSource = GameObject.FindGameObjectWithTag("NarrationSource").GetComponent<AudioSource>();
+        if(sfxClips == null)
+            sfxSource = GameObject.FindGameObjectWithTag("SFXSource").GetComponent<AudioSource>();
     }
 
     // Used to play a specific narration clip.
