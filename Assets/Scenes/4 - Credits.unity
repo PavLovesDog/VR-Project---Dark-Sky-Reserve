@@ -516,6 +516,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   maxGazeDistance: 100
+  gazeIndicatorSprite: {fileID: 3079623726342499824, guid: 27da8a20b28c5d940953cd26609ba966,
+    type: 3}
+  gazeIndicatorDistance: 10
   onBeginButtonGazeComplete:
     m_PersistentCalls:
       m_Calls:
@@ -4332,7 +4335,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
