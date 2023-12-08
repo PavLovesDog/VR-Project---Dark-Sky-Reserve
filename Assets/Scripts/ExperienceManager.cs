@@ -60,21 +60,33 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField]
     private bool inCreditsScene;
 
+    [Header("Reset Management")]
+    public Coroutine RMIDSRNarrationCoroutine;
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            gameObject.tag = "PersistentObject"; // tag for easy deletion in end
+            //gameObject.tag = "PersistentObject"; // tag for easy deletion in end //DON'T DELETE
             DontDestroyOnLoad(gameObject); // Keep the ExperienceManager across scenes
+
+            // Subscribe to the SceneManager's sceneLoaded event
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
             Destroy(gameObject);
         }
 
-        // Subscribe to the SceneManager's sceneLoaded event
-        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
     }
 
     private void OnDisable()
@@ -90,18 +102,16 @@ public class ExperienceManager : MonoBehaviour
 
     private void Start()
     {
-        //BELOW WONT BE REQUIRED WHEN WE START FROM MAIN MENU. leave as is  for now
-        // Start the initial sequence  DEBUG
-        //StartCoroutine(InitialNarrationSequence());
         pauseLeverCount = true;
-
-        
     }
 
     // This method is called every time a scene is loaded
     //---------------------------------------------------------------------------------- SCENE LOAD EVENT
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Add a check to ensure this is the valid instance
+        if (this != Instance) return;
+
         switch (scene.name)
         {
             case "0 - Main Menu":
@@ -117,7 +127,7 @@ public class ExperienceManager : MonoBehaviour
                 inStreetScene = true;
                 inMainMenu = false;
                 //FadeIn
-                StartCoroutine(FadeIn());
+                StartCoroutine(FadeIn()); // THIS is line 120
                 if (beginNarration)
                 {
                     beginNarration = false;
@@ -130,7 +140,7 @@ public class ExperienceManager : MonoBehaviour
                 inRmidsrScene = true;
                 inStreetScene = false;
                 StartCoroutine(FadeIn());
-                StartCoroutine(PlayRMIDSRNarrationSequence());
+                RMIDSRNarrationCoroutine = StartCoroutine(PlayRMIDSRNarrationSequence());
                 break;
 
             case "3 - Planet Scene":
@@ -152,14 +162,7 @@ public class ExperienceManager : MonoBehaviour
         }
     }
 
-    private void ResetExperience()
-    {
-        beginNarration = true;
-        // Reset other flags HERE as needed
-        canInteractLever = false;
-
-        uniqueDeactivatedLeversCount = 0; // reset lever counter
-    }
+    
     #region Street Scene Logic
     // Street Scene logic
     // --------------------------------------------------------------------------------------- STREET SCENE
@@ -300,7 +303,7 @@ public class ExperienceManager : MonoBehaviour
     //Coroutine to call to initiate change
     private IEnumerator EndOfStreetScene()
     {
-        Debug.Log("All sockets are empty. lets move on");
+        //Debug.Log("All sockets are empty. lets move on");
 
         //wait for prevoius clip to end
         yield return new WaitForSeconds(narrationDelay + 1f); //Match wait with marrative delay
@@ -446,8 +449,6 @@ public class ExperienceManager : MonoBehaviour
 
         //engage the following screens
         CreditsSceneManager.Instance.ShowCreditsWrapper();
-
-        ResetExperience(); // trip bools for next experience
     }
 
     #endregion
@@ -487,6 +488,54 @@ public class ExperienceManager : MonoBehaviour
     #region Scene Management
     //Scene Management
     // -------------------------------------------------------------------------------------------------------- SCENE MANAGEMENT
+    //Function to Reset the experience by returning to the main menu
+    public IEnumerator ResetExperience()
+    {
+
+        yield return new WaitForEndOfFrame();
+
+        // Reset flags HERE as needed
+        uniqueDeactivatedLeversCount = 0; // reset lever counter
+        currentNarrationIndex = 0;
+        beginNarration = true;
+        pauseLeverCount = true;
+        canInteractLever = false;
+        allRMIDSRNarrationPlayed = false;
+        planetNarrationClip1Played = false;
+
+        //stop any audio
+        if (AudioManager.Instance.IsNarrationPlaying())
+        {
+            AudioManager.Instance.StopSFX();
+            AudioManager.Instance.StopNarration();
+        }
+
+        //Stop scene specific Coroutines
+        if(inRmidsrScene)
+        {
+            StopCoroutine(RMIDSRNarrationCoroutine);
+        }
+
+        // Clear the HashSet before destroying persistent objects
+        PersistGameObject.ClearCreatedObjects();
+
+        yield return new WaitForEndOfFrame();
+
+        //destroy persistent objects
+        GameObject[] persistentObjects = GameObject.FindGameObjectsWithTag("PersistentObject");
+        foreach (GameObject obj in persistentObjects)
+        {
+            Destroy(obj);
+        }
+        yield return new WaitForEndOfFrame();
+
+        yield return StartCoroutine(FadeOut());
+
+        yield return new WaitForEndOfFrame();
+
+        //ReLoad the experience back to main menu
+        SceneManager.LoadScene(sceneNames[0]);
+    }
     private IEnumerator FadeOut()
     {
         //check if fade overlay is not null
@@ -503,8 +552,11 @@ public class ExperienceManager : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
+        // Check if the ExperienceManager itself is still valid
+        if (this == null) yield break;
+
         //check if fade overlay is not null
-        if(fadeOverlay != null)
+        if (fadeOverlay != null)
             yield return StartCoroutine(Fade(0));
         else
         {
@@ -520,14 +572,19 @@ public class ExperienceManager : MonoBehaviour
         float startAlpha = fadeOverlay.alpha;
         float time = 0f;
 
+        if (fadeOverlay == null) // double catch..
+            fadeOverlay = GameObject.FindGameObjectWithTag("FadeCanvas").GetComponent<CanvasGroup>();
+
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
-            fadeOverlay.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
+            if(fadeOverlay != null) // catch for reset from mid scene
+                fadeOverlay.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
             yield return null;
         }
 
-        fadeOverlay.alpha = targetAlpha; // Ensure it ends at the targetAlpha
+        if (fadeOverlay != null) // catch for reset from mid scene
+            fadeOverlay.alpha = targetAlpha; // Ensure it ends at the targetAlpha
     }
 
     // Call this method when you want to move to the next scene

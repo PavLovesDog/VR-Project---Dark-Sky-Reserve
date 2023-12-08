@@ -78,7 +78,7 @@ public class PlanetLeverControl : MonoBehaviour
 
             if (other.gameObject.CompareTag("Hand"))
             {
-                Debug.Log("Lever TOUCHED Hand");
+                //Debug.Log("Lever TOUCHED Hand");
 
                 StartCoroutine(RotateLever(offRotation));
 

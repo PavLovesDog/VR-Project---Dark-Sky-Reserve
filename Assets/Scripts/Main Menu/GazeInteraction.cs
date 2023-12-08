@@ -8,6 +8,7 @@ public class GazeInteraction : MonoBehaviour
     public Transform gazeTransform;
     public Image beginLoadingImage;
     public Image continueLoadingImage;
+    public Image resetLoadingImage;
     public float gazeTime = 3f;
     public LayerMask interactableLayer;
     public float maxGazeDistance = 100f;
@@ -19,6 +20,7 @@ public class GazeInteraction : MonoBehaviour
     // Define UnityEvents that can be assigned from the Inspector
     public UnityEvent onBeginButtonGazeComplete;
     public UnityEvent onContinueButtonGazeComplete;
+    public UnityEvent onResetButtonGazeComplete;
 
     private void Start()
     {
@@ -44,6 +46,11 @@ public class GazeInteraction : MonoBehaviour
             {
                 loadingImage = continueLoadingImage;
                 gazeEvent = onContinueButtonGazeComplete;
+            }
+            else if(hit.collider.CompareTag("ResetButton"))
+            {
+                loadingImage = resetLoadingImage;
+                gazeEvent = onResetButtonGazeComplete;
             }
 
             if (loadingImage != null && gazeEvent != null)
@@ -71,8 +78,12 @@ public class GazeInteraction : MonoBehaviour
         else if (isGazing)
         {
             isGazing = false;
-            beginLoadingImage.fillAmount = 0f;
-            continueLoadingImage.fillAmount = 0f;
+            if(beginLoadingImage != null)
+               beginLoadingImage.fillAmount = 0f;
+            if (continueLoadingImage != null)
+                continueLoadingImage.fillAmount = 0f;
+            if (resetLoadingImage != null)
+                resetLoadingImage.fillAmount = 0f;
         }
     }
 
@@ -85,6 +96,11 @@ public class GazeInteraction : MonoBehaviour
             Vector3 direction = gazeTransform.TransformDirection(Vector3.forward) * maxGazeDistance;
             Gizmos.DrawRay(gazeTransform.position, direction);
         }
+    }
+
+    public void ReloadMainMenuFromGame()
+    {
+        StartCoroutine(ExperienceManager.Instance.ResetExperience());
     }
 
     //---------------------------------------------------------------------------------OLD

@@ -17,8 +17,6 @@ public class PlanetScenePositionManager : MonoBehaviour
     [SerializeField]
     private CanvasGroup fadeOverlay; // Assign a UI CanvasGroup that will act as the fade overlay
 
-    [SerializeField]
-    private Canvas endCanvas; // Assign a UI CanvasGroup that will act as the fade overlay
 
     [Header("Timing")]
     [SerializeField]
@@ -66,7 +64,6 @@ public class PlanetScenePositionManager : MonoBehaviour
         StartCoroutine(PositionSequence());
         finalLever.SetActive(false); // maybe access and just turn of the renderer
         lightPollution.SetActive(false);
-        endCanvas.enabled = false;
         speedUpNight = false;
 
         //Coroutine to display the RMIDSR sprite
@@ -136,8 +133,8 @@ public class PlanetScenePositionManager : MonoBehaviour
     private IEnumerator FadeSprite(GameObject obj, bool fadeIn, float duration)
     {
         SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-        float startAlpha = fadeIn ? 0f : 1f;
-        float endAlpha = fadeIn ? 1f : 0f;
+        float startAlpha = fadeIn ? 0f : 0.85f;
+        float endAlpha = fadeIn ? 0.85f : 0f;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)

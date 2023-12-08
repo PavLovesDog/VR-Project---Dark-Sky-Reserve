@@ -23,7 +23,7 @@ public class LeverControl : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Hand") && Time.time - lastActivationTime >= activationCooldown)
             {
-                Debug.Log("Lever TOUCHED Hand");
+                //Debug.Log("Lever TOUCHED Hand");
     
                 // If a rotation coroutine is running, stop it
                 if (rotationCoroutine != null)

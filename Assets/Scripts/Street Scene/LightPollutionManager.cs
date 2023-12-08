@@ -146,7 +146,7 @@ public class LightPollutionManager : MonoBehaviour
     
         if (currentSocketsOccupiedCount != previousSocketsOccupiedCount)
         {
-            Debug.Log($"Number of plugs connected: {currentSocketsOccupiedCount}");
+            //Debug.Log($"Number of plugs connected: {currentSocketsOccupiedCount}");
             previousSocketsOccupiedCount = currentSocketsOccupiedCount;
     
             float targetBlendValue = 0f;

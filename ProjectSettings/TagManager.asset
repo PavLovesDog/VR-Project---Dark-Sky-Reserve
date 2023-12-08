@@ -20,6 +20,7 @@ TagManager:
   - PersistentObject
   - NarrationSource
   - SFXSource
+  - ResetButton
   layers:
   - Default
   - TransparentFX

@@ -136,17 +136,19 @@ public class CreditsSceneManager : MonoBehaviour
     {
         yield return StartCoroutine(Fade(1)); // fade out
 
-        //destroy persistent objects
-        GameObject[] persistentObjects = GameObject.FindGameObjectsWithTag("PersistentObject");
-        foreach (GameObject obj in persistentObjects)
-        {
-            Destroy(obj);
-        }
 
-        yield return new WaitForSeconds(2); // just wait...
+        yield return new WaitForEndOfFrame(); // ensure above code is completed before destroying
+        StartCoroutine(ExperienceManager.Instance.ResetExperience()); // Reset bools, floats and other things for another run
 
-        //ReLoad the experience back to main menu
-        SceneManager.LoadScene(mainMenuSceneName);
+        ////destroy persistent objects
+        //GameObject[] persistentObjects = GameObject.FindGameObjectsWithTag("PersistentObject");
+        //foreach (GameObject obj in persistentObjects)
+        //{
+        //    Destroy(obj);
+        //}
+
+        ////ReLoad the experience back to main menu
+        //SceneManager.LoadScene(mainMenuSceneName);
     }
 
     private IEnumerator Fade(float targetAlpha)

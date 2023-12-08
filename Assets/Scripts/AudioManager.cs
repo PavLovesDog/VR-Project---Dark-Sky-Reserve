@@ -93,13 +93,17 @@ public class AudioManager : MonoBehaviour
 
     public void StopSFX()
     {
-        sfxSource.Stop();
+        if(sfxSource != null)
+            sfxSource.Stop();
     }
 
     public void StopNarration()
     {
-        narrationSource.Stop();
-        narrationQueue.Clear();
+        if (narrationSource != null)
+        {
+            narrationSource.Stop();
+            narrationQueue.Clear();
+        }
     }
 
     public bool IsNarrationPlaying()
