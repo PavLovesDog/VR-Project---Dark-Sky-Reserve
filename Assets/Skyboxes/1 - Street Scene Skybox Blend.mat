@@ -65,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Skybox2:
-        m_Texture: {fileID: 8900000, guid: cb9b95a01a353d843bbaec08761ee869, type: 3}
+        m_Texture: {fileID: 8900000, guid: 671ad6214eaf60546a108aa9e248dc61, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Skybox3:
